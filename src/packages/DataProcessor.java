@@ -4,6 +4,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import java.util.Random;
+
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.stage.*;
+import javafx.scene.*;
+import javafx.scene.chart.Chart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -14,21 +32,35 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.*;
 
+import application.*;
+
 
 
 
 
 /** Simple example of JNA interface mapping and usage. */
-public class DataProcessor 
+public class DataProcessor extends Application 
 {      
 	
 	static HttpPost postChange;
 	static Timer timer = new Timer();
     static boolean timeout = false;
-	
-    public static void main(String[] args) throws IOException 
+    @Override
+    public void start(Stage primaryStage) {
+		try {
+			
+			GUIConstruct.buildGUI();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+    }
+    public void Main(String[] args) throws IOException 
     {
+    	launch(args);
     	CSVLogger.create();
+    	ZWave.create();
+    	ZWave.Authenticate();
     	
     	//try {
     	//	ZWave.create();
@@ -49,6 +81,7 @@ public class DataProcessor
     	short enginePort		= 3008;
     	int option 				= 1;
     	int state  				= 0;
+    	
     	
     	userID = new IntByReference(0);
     	
@@ -111,20 +144,15 @@ public class DataProcessor
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState));
 					
 					//Check for pushing action at a power over 5.0 and timeout false
-//					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == 2) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (timeout == false)) {
-//						System.out.println("Over");
-//						try {
-//							restPost();
-//							timerStart(true);
-//						} catch (ClientProtocolException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-//					
+					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == 2) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+						LightTimer.initTimer();
+						ZWave.post(2, 255);
+					}
+					else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==4 && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
+						LightTimer.initTimer();
+						ZWave.toggleRec(3);
+					
+					}
 				}
 				
 			}
@@ -189,5 +217,8 @@ public class DataProcessor
     			}, 10000);
     	}
     }
+   
+    
+    
 
 }

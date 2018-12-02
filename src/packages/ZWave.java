@@ -1,6 +1,9 @@
 package packages;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -11,7 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 public class ZWave {
 	
-	private static String address = "http://10.0.0.7";
+	private static String address = "http://134.88.49.223";
 	private static String port = ":8083";
 	private static String authenticate = ZWave.address + ZWave.port  +"/ZAutomation/api/v1/login";
 	private static HttpClient client;
@@ -45,13 +48,57 @@ public class ZWave {
 	
 	// post request to z way server to target a device and brightness
 	public static int post(int device, int brightness) throws ClientProtocolException, IOException {
-		HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+Integer.toString(device) +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(brightness)+"%29");
-		HttpResponse statusResponse = client.execute(getStatus);
-		System.out.println(statusResponse.toString());
+		  //Gets the current status of the light
+  	  	HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B" + Integer.toString(device) + "%5D.instances%5B0%5D.commandClasses.SwitchMultilevel.data.level.value");
+
+  	  	HttpResponse statusResponse = client.execute(getStatus);
+  	  	BufferedReader statusOut =  new BufferedReader(new InputStreamReader(statusResponse.getEntity().getContent()));
+  	  	getStatus.releaseConnection();
+  	  	int status = Integer.parseInt(statusOut.readLine());
+  	  	if(status > 0) { // Light on
+  	  		brightness = 0;
+  	  		
+  	  	}
+  	  		
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+Integer.toString(device) +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(brightness)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+		System.out.println(postResponse.toString());
 		
 		return 0;
 		
 	}
+	
+	public static boolean toggleRec(int device) throws ClientProtocolException, IOException {
+		HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5b" +Integer.toString(device)+"%5D.instances%5B0%5D.commandClasses.SwitchBinary.data.level.value");
+		HttpResponse statusResponse = client.execute(getStatus);
+		BufferedReader statusOut =  new BufferedReader(new InputStreamReader(statusResponse.getEntity().getContent()));
+		System.out.println(statusResponse.toString());
+		boolean status = Boolean.parseBoolean(statusOut.readLine());
+		getStatus.releaseConnection();
+		
+		System.out.println(status);
+		if(status == false) {
+			status = true;
+			
+		}
+		else if(status == true) {
+			status = false;
+		}
+		System.out.println(status);
+		
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+Integer.toString(device) +"%5D.instances%5B0%5D.SwitchBinary.Set%28" + Boolean.toString(status)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+		System.out.println(postResponse.toString());
+			
+		return status;
+		
+		
+		
+		
+	}
+	
 	
 	
 	
