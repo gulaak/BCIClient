@@ -39,7 +39,7 @@ import application.*;
 
 
 /** Simple example of JNA interface mapping and usage. */
-public class DataProcessor extends Application 
+public class DataProcessor extends javafx.application.Application 
 {      
 	
 	static HttpPost postChange;
@@ -55,13 +55,13 @@ public class DataProcessor extends Application
 			e.printStackTrace();
 		}
     }
-    public void Main(String[] args) throws IOException 
+    public static void main(String[] args) throws IOException 
     {
-    	launch(args);
+    	
     	CSVLogger.create();
     	ZWave.create();
     	ZWave.Authenticate();
-    	
+    	//Application.launch(args);
     	//try {
     	//	ZWave.create();
     	//	ZWave.Authenticate();
