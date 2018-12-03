@@ -19,7 +19,7 @@ public class Tabs {
 	}
 	static public void setTab2Content() // fills tab 2
 	{
-		tab2pane.setCenter(ScrollingChart.createChart()); // puts chart in center of tab 2
+		tab2pane.setCenter(ScrollingChart.createContent()); // puts chart in center of tab 2
 		tab2pane.setLeft(BoxBuild.InitProfileBox()); // puts profiles on left side of tab 2
 		
 	}
