@@ -34,34 +34,28 @@ import com.sun.jna.ptr.*;
 
 import application.*;
 
-
-
-
-
-/** Simple example of JNA interface mapping and usage. */
-public class DataProcessor extends javafx.application.Application 
-{      
-	
-	static HttpPost postChange;
-	static Timer timer = new Timer();
-    static boolean timeout = false;
-    @Override
-    public void start(Stage primaryStage) {
+class Connection extends Thread
+{
+	public void run()
+	{
+		
 		try {
-			
-			GUIConstruct.buildGUI();
-		}
-		catch(Exception e) {
+			CSVLogger.create();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    public static void main(String[] args) throws IOException 
-    {
-    	
-    	CSVLogger.create();
     	ZWave.create();
-    	ZWave.Authenticate();
-    	//Application.launch(args);
+    	try {
+			ZWave.Authenticate();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	//try {
     	//	ZWave.create();
     	//	ZWave.Authenticate();
@@ -136,7 +130,12 @@ public class DataProcessor extends javafx.application.Application
 					System.out.println(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
 					if(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)>0.9) {System.out.println("Action trigger Exiting...");
 					return;}
-					CSVLogger.log(EmoState.INSTANCE.ES_GetTimeFromStart(eState),Integer.toString(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)),EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState),EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+					try {
+						CSVLogger.log(EmoState.INSTANCE.ES_GetTimeFromStart(eState),Integer.toString(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)),EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState),EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//Logging Cognitive Actions 
 					System.out.print("CognitivGetCurrentAction: ");
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState));
@@ -146,11 +145,27 @@ public class DataProcessor extends javafx.application.Application
 					//Check for pushing action at a power over 5.0 and timeout false
 					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == 2) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 						LightTimer.initTimer();
-						ZWave.post(2, 255);
+						try {
+							ZWave.post(2, 255);
+						} catch (ClientProtocolException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==4 && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
 						LightTimer.initTimer();
-						ZWave.toggleRec(3);
+						try {
+							ZWave.toggleRec(3);
+						} catch (ClientProtocolException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
 					}
 				}
@@ -165,43 +180,35 @@ public class DataProcessor extends javafx.application.Application
     	Edk.INSTANCE.EE_EngineDisconnect();
     	System.out.println("Disconnected!");
     }
-    
-    public static void restPost() throws ClientProtocolException, IOException {
-    	  HttpClient client = HttpClientBuilder.create().build();
-    	  //Gets the current status of the light
-    	  HttpPost getStatus = new HttpPost("http://192.168.1.50:8083/ZWaveAPI/Run/devices%5B4%5D.instances%5B0%5D.commandClasses%5B0x25%5D.data.level.value");
+	}
 
-    	  HttpResponse statusResponse = client.execute(getStatus);
-    	  BufferedReader statusOut =  new BufferedReader(new InputStreamReader(statusResponse.getEntity().getContent()));
-    	  int status = Integer.parseInt(statusOut.readLine());
-    	  
-    	  
-    	  switch (status) {
-    	  case 0:
-  			{
-  				//Set light value to off
-  				postChange = new HttpPost("http://192.168.1.50:8083/ZWaveAPI/Run/devices%5B4%5D.instances%5B0%5D.commandClasses%5B0x25%5D.Set%28255%29");
-  			}
-  				break;
-    	  case 255:
-			{
-				//Set Light value to on
-				postChange = new HttpPost("http://192.168.1.50:8083/ZWaveAPI/Run/devices%5B4%5D.instances%5B0%5D.commandClasses%5B0x25%5D.Set%280%29");
-			}
-				break;
-  		  }
-  
-    	  
-    	  HttpClient switchClient = HttpClientBuilder.create().build();
-    	  HttpResponse statusSwitch = switchClient.execute(postChange);
-    	  BufferedReader rd = new BufferedReader(new InputStreamReader(statusSwitch.getEntity().getContent()));
-    	  String line = "";
 
-    	  while ((line = rd.readLine()) != null) {
-    	   System.out.println(line);
-    	  }
-    	  
- 
+
+/** Simple example of JNA interface mapping and usage. */
+public class DataProcessor extends javafx.application.Application 
+{      
+	
+	static HttpPost postChange;
+	static Timer timer = new Timer();
+    static boolean timeout = false;
+    @Override
+    public void start(Stage primaryStage) {
+		try {
+			GUIConstruct.buildGUI();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+    }
+    public static void main(String[] args) throws IOException 
+    {
+    	
+    	Connection thread = new Connection();
+    	thread.start();
+    	Application.launch(args);
+    	
+    	
     }
     
     public static void timerStart(boolean startValue) {
