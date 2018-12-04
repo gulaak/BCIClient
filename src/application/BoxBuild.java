@@ -51,6 +51,7 @@ public class BoxBuild {
 		switches.getChildren().add(HomeControl.lightStatus);
 		switches.getChildren().add(HomeControl.outlet);
 		switches.getChildren().add(HomeControl.outletStatus);
+		switches.setPadding(new Insets(400,0,0,400));
 		return switches;
 	}
 	
