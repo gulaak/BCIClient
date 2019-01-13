@@ -5,12 +5,14 @@ import java.io.InputStreamReader;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import java.util.Random;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -36,28 +38,42 @@ import application.*;
 
 
 /** Simple example of JNA interface mapping and usage. */
-public class DataProcessor extends javafx.application.Application 
+public class Main extends Application
 {      
 	
 	static HttpPost postChange;
 	static Timer timer = new Timer();
     static boolean timeout = false;
+
+    
     @Override
-    public void start(Stage primaryStage) {
-		try {
-			GUIConstruct.buildGUI();
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+    public void start(Stage primaryStage) throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("Layout.fxml")); 
+		Pane pane = loader.load();
+		
+		Scene scene = new Scene(pane);
+		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		
+	    controllerInterface.mc = (MainController)loader.getController();
+		
+		controllerInterface.mc.RTG.setAnimated(false);
+		Test thread = new Test();
+	    thread.start();
+	   // thread.setDaemon(true);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		 
+		
+    	
     }
-    public static void main(String[] args) throws IOException 
+    public static void main(String[] args)
     {
     	
-    	Threading thread = new Threading();
-    	thread.start();
-    	Application.launch(args);
+
+    	launch(args);
+    	
+    
     	
     	
     }

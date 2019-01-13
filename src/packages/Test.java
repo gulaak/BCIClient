@@ -2,26 +2,76 @@ package packages;
 
 
 import java.io.IOException;
+import java.util.Random;
 
 import org.apache.http.client.ClientProtocolException;
 
-public class Test {
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.TabPane;
 
-	public static void main(String[] args) throws ClientProtocolException, IOException {
-		// TODO Auto-generated method stub
+public class Test extends Thread {
+	
+
+	public int curr;
+	public XYChart.Series<String,Number> myseries;
+	
+	public Test() {
 		
-		ZWave.create();
-		ZWave.Authenticate();
+		myseries = new XYChart.Series<>();
+		curr = 1;
+		
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void run() {
+		//new MainController().AddPoint(0.9, 10);
+		controllerInterface.mc.RTG.getData().add(myseries);
 
 		while(true) {
-		
-			if(LightTimer.timedout == true) {
-				ZWave.post(2, 255);
-				LightTimer.initTimer();
-			}
+			String temp = controllerInterface.mc.getTabInstance().getSelectionModel().getSelectedItem().getText();
+			//System.out.println(temp);
+			if(temp.equals("Graph")) {
+				
+						
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+						Platform.runLater(()-> {
+							this.myseries.getData().add(new XYChart.Data<String,Number>(Integer.toString(curr),(new Random().nextInt(100))));
+							curr++;		
+							
+						
+						
+						
+						});
+							
+							
+							
+							
+							
+						
+						
+									
 			
+				
+				
+				
+				
+			}
 		}
-
+		
+		
+			
+		
+		
 	}
+	
 
 }

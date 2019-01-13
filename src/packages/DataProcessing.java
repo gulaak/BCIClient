@@ -7,7 +7,7 @@ import org.apache.http.client.ClientProtocolException;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
-public class Threading extends Thread {
+public class DataProcessing extends Thread {
 	public void run()
 	{
 		
