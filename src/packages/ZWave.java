@@ -12,6 +12,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+
 public class ZWave {
 	
 	private static String address = "http://134.88.49.223";
@@ -101,6 +104,7 @@ public class ZWave {
 		
 		
 	}
+
 	
 	
 	

@@ -10,6 +10,7 @@ import javax.swing.event.ChangeEvent;
 import org.apache.http.client.ClientProtocolException;
 
 import javafx.beans.value.ObservableValue;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -43,8 +44,6 @@ public class MainController implements Initializable {
 	 
 	 private Image recOn;
 	 
-	 
-	
 	
 	 @FXML
 	 private TabPane MainTabs;
@@ -171,15 +170,30 @@ public class MainController implements Initializable {
 
 	@FXML
 	void DeviceOne(MouseEvent event) throws ClientProtocolException, IOException {
+		
+		
+		ZWave.create();
+		ZWave.Authenticate();
+		new Thread(()->{
+			try {
+				ZWave.post(7, 255);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}).start();
 		if (this.deviceOneImg.getImage() == lightOff)
 		{
 			this.deviceOneImg.setImage(this.lightOn);
-			//ZWave.post(2, 255);
+			
+
+				
+			
 		}
 		else
 		{
 			this.deviceOneImg.setImage(this.lightOff);
-			//ZWave.post(2, 0);
+			
 		}
 	    
 	}
@@ -209,6 +223,17 @@ public class MainController implements Initializable {
 	
 	@FXML
 	void DeviceTwo(MouseEvent event) throws ClientProtocolException, IOException {
+		
+		ZWave.create();
+		ZWave.Authenticate();
+		new Thread(()->{
+			try {
+				ZWave.post(8, 255);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}).start();
 		if (this.deviceTwoImg.getImage() == lightOff)
 		{
 			this.deviceTwoImg.setImage(this.lightOn);
@@ -223,6 +248,15 @@ public class MainController implements Initializable {
 	
 	@FXML
 	void DeviceThree(MouseEvent event) {
+		
+		new Thread(()->{
+			try {
+				ZWave.post(9, 255);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}).start();
 		if (this.deviceThreeImg.getImage() == lightOff)
 		{
 			this.deviceThreeImg.setImage(this.lightOn);
@@ -258,21 +292,37 @@ public class MainController implements Initializable {
 	 }
 	 
 	 @FXML
-	 void recClick(MouseEvent event) {
+	 void recClick(MouseEvent event) throws ClientProtocolException, IOException {
 		 
-		 
+		 ZWave.create();
+		 ZWave.Authenticate();
 		 if(this.recImage.getImage() == this.recOff)
 		 {
 			 this.recImage.setImage(this.recOn);
-				//ZWave.post(3, 255);
+			 new Thread(()-> {
+				try {
+					ZWave.toggleRec(3);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			 }).start();
 		 }
 		 else
 		 {
 			 this.recImage.setImage(this.recOff);
-			//ZWave.post(3, 0);
+			 new Thread(()-> {
+				 try {
+					ZWave.toggleRec(3);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 }).start();
+			 
 		 }
 		 
-
+		 	
 	 }
 	
 	
