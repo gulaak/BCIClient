@@ -1,10 +1,11 @@
 package packages;
+import javafx.beans.value.ChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -32,11 +33,17 @@ import javafx.scene.layout.VBox;
 
 public class MainController implements Initializable {
 
-	public static MainController mc;
 	
-	 Image lightOn;
 	
-	 Image lightOff;
+	 private Image lightOn;
+	
+	 private Image lightOff;
+	 
+	 private Image recOff;
+	 
+	 private Image recOn;
+	 
+	 
 	
 	
 	 @FXML
@@ -96,6 +103,19 @@ public class MainController implements Initializable {
 
 	 @FXML
 	 public NumberAxis y;
+	 
+	 @FXML
+	 private ImageView deviceTwoImg;
+
+	 @FXML
+	 private ImageView deviceThreeImg;
+	 
+	 @FXML
+	 private ImageView recImage;
+
+	 @FXML
+	 private Label recStatus;
+
 
 	
 	@Override
@@ -104,8 +124,32 @@ public class MainController implements Initializable {
 		y.setLabel("Power(0-1)");
 		this.lightOn = new Image("/LightOn.PNG"); //grab image for GUI
 		this.lightOff = new Image("/LightOff.PNG"); // grab image for GUI
+		this.recOff = new Image("/RecOff.PNG");
+		this.recOn = new Image("/RecOn.PNG");
 		choiceBox.getItems().add("hello"); // add profile boxes
-		this.deviceOneImg.setImage(this.lightOff); // set defualt image
+		this.deviceOneImg.setImage(this.lightOff); // set default image
+		this.deviceTwoImg.setImage(this.lightOff);
+		this.deviceThreeImg.setImage(this.lightOff);
+		this.recImage.setImage(this.recOff);
+		this.home.setSelected(true);
+		this.signalProgress.setProgress(0.5);
+		
+		this.SliderD1.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				sliderOneChanged();
+			}
+		});
+		this.SliderD2.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 2
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				sliderTwoChanged();
+			}
+		});
+		this.SliderD3.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 3
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				sliderThreeChanged();
+			}
+		});
+		
 		
 		
 	
@@ -129,25 +173,24 @@ public class MainController implements Initializable {
 	    //ZWave.post(2, 255);
 	}
 	
-	void slider1changed() {
-		System.out.println(SliderD1.getValue());
+	void sliderOneChanged() {
+		int brightness = (int)(Math.floor(SliderD1.getValue()));
+		D1Status.setText(Integer.toString(brightness));
 	}
 	
-	@FXML
-    void Slider1Click(MouseEvent event) {
-		D1Status.setText(Integer.toString((int)Math.floor(SliderD1.getValue())));
+	
+	
+
+    void sliderTwoChanged() {
+    	int brightness = (int)(Math.floor(SliderD2.getValue()));
+		D2Status.setText(Integer.toString(brightness));
 
     }
 	
-	@FXML
-    void Slider2Click(MouseEvent event) {
-		D2Status.setText(Integer.toString((int)Math.floor(SliderD2.getValue())));
 
-    }
-	
-	@FXML
-    void Slider3Click(MouseEvent event) {
-		D3Status.setText(Integer.toString((int)Math.floor(SliderD3.getValue())));
+    void sliderThreeChanged() {
+    	int brightness = (int)(Math.floor(SliderD3.getValue()));
+		D3Status.setText(Integer.toString(brightness));
 
     }
 	
@@ -155,12 +198,13 @@ public class MainController implements Initializable {
 	
 	@FXML
 	void DeviceTwo(MouseEvent event) throws ClientProtocolException, IOException {
-		ZWave.post(3, 255);
+		this.deviceTwoImg.setImage(this.lightOn);
+		//ZWave.post(3, 255);
 	}
 	
 	@FXML
 	void DeviceThree(MouseEvent event) {
-
+		this.deviceThreeImg.setImage(this.lightOn);
 	}
 
 	
@@ -182,6 +226,12 @@ public class MainController implements Initializable {
 	
 	 @FXML
 	 void slider1Move(TouchEvent event) {
+
+	 }
+	 
+	 @FXML
+	 void recClick(MouseEvent event) {
+		 this.recImage.setImage(this.recOn);
 
 	 }
 	

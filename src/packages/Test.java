@@ -32,19 +32,24 @@ public class Test extends Thread {
 		controllerInterface.mc.RTG.getData().add(myseries);
 
 		while(true) {
-			String temp = controllerInterface.mc.getTabInstance().getSelectionModel().getSelectedItem().getText();
+			String temp = controllerInterface.mc.getTabText();
 			//System.out.println(temp);
 			if(temp.equals("Graph")) {
 				
 						
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 						Platform.runLater(()-> {
-							this.myseries.getData().add(new XYChart.Data<String,Number>(Integer.toString(curr),(new Random().nextInt(100))));
+							if(this.myseries.getData().toArray().length >= 10) {
+								this.myseries.getData().remove(0); 
+								this.myseries.getData().add(new XYChart.Data<String,Number>(Integer.toString(curr),(new Random().nextInt(100))));
+							}
+							else
+								this.myseries.getData().add(new XYChart.Data<String,Number>(Integer.toString(curr),(new Random().nextInt(100))));
 							curr++;		
 							
 						

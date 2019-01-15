@@ -3,7 +3,6 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
@@ -28,18 +27,15 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" onTouchReleased="#slider1Move" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="70.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#DeviceOne" text="Button" />
-                        <Button layoutX="78.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#DeviceThree" text="Button" />
-                        <Button layoutX="220.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#DeviceTwo" text="Button" />
                         <ChoiceBox fx:id="choiceBox" layoutX="483.0" layoutY="9.0" prefHeight="25.0" prefWidth="87.0" />
-                        <Label fx:id="D1Status" layoutX="72.0" layoutY="73.0" text="D1Status" />
-                        <Label fx:id="D2Status" layoutX="222.0" layoutY="73.0" text="D2Status" />
-                        <Label fx:id="D3Status" layoutX="80.0" layoutY="247.0" text="D3Status" />
-                        <Slider fx:id="SliderD3" layoutX="34.0" layoutY="180.0" onMouseClicked="#Slider3Click" />
-                        <Slider fx:id="SliderD1" layoutX="26.0" layoutY="7.0" onMouseClicked="#Slider1Click" />
-                        <Slider fx:id="SliderD2" layoutX="190.0" layoutY="7.0" onMouseClicked="#Slider2Click" />
-                        <Label layoutX="246.0" layoutY="273.0" text="Target Network" />
-                        <VBox fx:id="vbox" layoutX="238.0" layoutY="290.0" prefHeight="45.0" prefWidth="100.0">
+                        <Label fx:id="D1Status" layoutX="72.0" layoutY="87.0" text="D1Status" />
+                        <Label fx:id="D2Status" layoutX="222.0" layoutY="87.0" text="D2Status" />
+                        <Label fx:id="D3Status" layoutX="80.0" layoutY="260.0" text="D3Status" />
+                        <Slider fx:id="SliderD3" blockIncrement="5.0" layoutX="34.0" layoutY="180.0" max="255.0" />
+                        <Slider fx:id="SliderD1" blockIncrement="5.0" layoutX="26.0" layoutY="7.0" max="255.0" />
+                        <Slider fx:id="SliderD2" blockIncrement="5.0" layoutX="190.0" layoutY="7.0" max="255.0" />
+                        <Label layoutX="457.0" layoutY="268.0" text="Target Network" />
+                        <VBox fx:id="vbox" layoutX="449.0" layoutY="285.0" prefHeight="45.0" prefWidth="100.0">
                            <children>
                               <RadioButton fx:id="home" mnemonicParsing="false" text="Home">
                                  <toggleGroup>
@@ -54,7 +50,11 @@
                         <ProgressBar fx:id="batteryProgress" layoutX="492.0" layoutY="171.0" prefWidth="49.0" progress="0.0" />
                         <Label layoutX="445.0" layoutY="139.0" text="Signal" />
                         <Label layoutX="445.0" layoutY="172.0" text="Battery" />
-                        <ImageView fx:id="deviceOneImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="deviceOneImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="34.0" onMouseClicked="#DeviceOne" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="deviceTwoImg" fitHeight="45.0" fitWidth="62.0" layoutX="215.0" layoutY="34.0" onMouseClicked="#DeviceTwo" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="deviceThreeImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="203.0" onMouseClicked="#DeviceThree" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="recImage" fitHeight="45.0" fitWidth="62.0" layoutX="222.0" layoutY="203.0" onMouseClicked="#recClick" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="recStatus" layoutX="234.0" layoutY="260.0" text="RecStatus" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -73,6 +73,16 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Scenes">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Wheel Chair">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
     

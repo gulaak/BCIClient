@@ -7,7 +7,16 @@ import org.apache.http.client.ClientProtocolException;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
+import javafx.application.Platform;
+import javafx.scene.chart.XYChart;
+
 public class DataProcessing extends Thread {
+	public static XYChart.Series<String,Number> myseries;
+	
+	public void DataProcessing() {  // constructor for instance of thread
+		this.myseries = new XYChart.Series<>();
+	}
+	
 	public void run()
 	{
 		
@@ -113,9 +122,20 @@ public class DataProcessing extends Thread {
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState));
 					System.out.print("CurrentActionPower: ");
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState));
+					String timestampstr = Float.toString(timestamp);
 					
-					//Check for pushing action at a power over 5.0 and timeout false
-					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == 2) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+					Platform.runLater(()->{  // plots in application thread.
+						if(this.myseries.getData().toArray().length >= 10) {
+							this.myseries.getData().remove(0); 
+							this.myseries.getData().add(new XYChart.Data<String,Number>(timestampstr,EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)));
+						}
+						else
+							this.myseries.getData().add(new XYChart.Data<String,Number>(timestampstr,EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)));
+						
+					});
+					
+					//Check for pushing action at a power over 0.5 and timeout false
+					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) ==2 ) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 						LightTimer.initTimer();
 						try {
 							ZWave.post(2, 255);
