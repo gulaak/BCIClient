@@ -134,6 +134,8 @@ public class MainController implements Initializable {
 		this.home.setSelected(true);
 		this.signalProgress.setProgress(0.5);
 		
+		
+		
 		this.SliderD1.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 				sliderOneChanged();
@@ -169,8 +171,17 @@ public class MainController implements Initializable {
 
 	@FXML
 	void DeviceOne(MouseEvent event) throws ClientProtocolException, IOException {
-		this.deviceOneImg.setImage(this.lightOn);
-	    //ZWave.post(2, 255);
+		if (this.deviceOneImg.getImage() == lightOff)
+		{
+			this.deviceOneImg.setImage(this.lightOn);
+			//ZWave.post(2, 255);
+		}
+		else
+		{
+			this.deviceOneImg.setImage(this.lightOff);
+			//ZWave.post(2, 0);
+		}
+	    
 	}
 	
 	void sliderOneChanged() {
@@ -198,13 +209,30 @@ public class MainController implements Initializable {
 	
 	@FXML
 	void DeviceTwo(MouseEvent event) throws ClientProtocolException, IOException {
-		this.deviceTwoImg.setImage(this.lightOn);
-		//ZWave.post(3, 255);
+		if (this.deviceTwoImg.getImage() == lightOff)
+		{
+			this.deviceTwoImg.setImage(this.lightOn);
+			//ZWave.post(?, 255);
+		}
+		else
+		{
+			this.deviceTwoImg.setImage(this.lightOff);
+			//ZWave.post(?, 0);
+		}
 	}
 	
 	@FXML
 	void DeviceThree(MouseEvent event) {
-		this.deviceThreeImg.setImage(this.lightOn);
+		if (this.deviceThreeImg.getImage() == lightOff)
+		{
+			this.deviceThreeImg.setImage(this.lightOn);
+			//ZWave.post(?, 255);
+		}
+		else
+		{
+			this.deviceThreeImg.setImage(this.lightOff);
+			//ZWave.post(?, 0);
+		}
 	}
 
 	
@@ -231,7 +259,19 @@ public class MainController implements Initializable {
 	 
 	 @FXML
 	 void recClick(MouseEvent event) {
-		 this.recImage.setImage(this.recOn);
+		 
+		 
+		 if(this.recImage.getImage() == this.recOff)
+		 {
+			 this.recImage.setImage(this.recOn);
+				//ZWave.post(3, 255);
+		 }
+		 else
+		 {
+			 this.recImage.setImage(this.recOff);
+			//ZWave.post(3, 0);
+		 }
+		 
 
 	 }
 	

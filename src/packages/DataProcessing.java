@@ -13,7 +13,7 @@ import javafx.scene.chart.XYChart;
 public class DataProcessing extends Thread {
 	public static XYChart.Series<String,Number> myseries;
 	
-	public void DataProcessing() {  // constructor for instance of thread
+	public DataProcessing() {  // constructor for instance of thread
 		this.myseries = new XYChart.Series<>();
 	}
 	
