@@ -10,7 +10,9 @@ import javax.swing.event.ChangeEvent;
 import org.apache.http.client.ClientProtocolException;
 
 import javafx.beans.value.ObservableValue;
-
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -121,6 +123,7 @@ public class MainController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		x.setLabel("Time");
 		y.setLabel("Power(0-1)");
+		x.setScaleX(1.00);
 		this.lightOn = new Image("/LightOn.PNG"); //grab image for GUI
 		this.lightOff = new Image("/LightOff.PNG"); // grab image for GUI
 		this.recOff = new Image("/RecOff.PNG");
@@ -135,21 +138,21 @@ public class MainController implements Initializable {
 		
 		
 		
-		this.SliderD1.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
-			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-				sliderOneChanged();
-			}
-		});
-		this.SliderD2.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 2
-			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-				sliderTwoChanged();
-			}
-		});
-		this.SliderD3.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 3
-			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-				sliderThreeChanged();
-			}
-		});
+//		this.SliderD1.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
+//			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+//				sliderOneChanged();
+//			}
+//		});
+//		this.SliderD2.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 2
+//			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+//				sliderTwoChanged();
+//			}
+//		});
+//		this.SliderD3.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 3
+//			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+//				sliderThreeChanged();
+//			}
+//		});
 		
 		
 		
@@ -170,50 +173,70 @@ public class MainController implements Initializable {
 
 	@FXML
 	void DeviceOne(MouseEvent event) throws ClientProtocolException, IOException {
-		
-		
-		ZWave.create();
-		ZWave.Authenticate();
-		new Thread(()->{
-			try {
-				ZWave.post(7, 255);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}).start();
-		if (this.deviceOneImg.getImage() == lightOff)
-		{
-			this.deviceOneImg.setImage(this.lightOn);
-			
 
-				
+		
+		Service<Void> myservice = new Service<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				// TODO Auto-generated method stub
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						// TODO Auto-generated method stub
+						ZWave.create();
+						ZWave.Authenticate();
+						ZWave.post(7, 255);
+						return null;
+						
+					}
+					
+					@Override
+					protected void failed() {
+						System.out.println("Failed thread");
+					}
+					
+					@Override
+					protected void succeeded() {
+						if(deviceOneImg.getImage()==lightOff) {
+							deviceOneImg.setImage(lightOn);
+						}
+						else
+							deviceOneImg.setImage(lightOff);
+					}
+					
+				};
+			}
+
 			
-		}
-		else
-		{
-			this.deviceOneImg.setImage(this.lightOff);
 			
-		}
-	    
+		};
+		
+		myservice.start();
+		
+		
+		
+			
+		
 	}
-	
-	void sliderOneChanged() {
+	@FXML
+	void sliderOneChanged(MouseEvent event) {
 		int brightness = (int)(Math.floor(SliderD1.getValue()));
 		D1Status.setText(Integer.toString(brightness));
 	}
 	
 	
 	
-
-    void sliderTwoChanged() {
+	@FXML
+    void sliderTwoChanged(MouseEvent event) {
     	int brightness = (int)(Math.floor(SliderD2.getValue()));
 		D2Status.setText(Integer.toString(brightness));
 
     }
 	
-
-    void sliderThreeChanged() {
+	@FXML
+    void sliderThreeChanged(MouseEvent event) {
     	int brightness = (int)(Math.floor(SliderD3.getValue()));
 		D3Status.setText(Integer.toString(brightness));
 
@@ -224,49 +247,93 @@ public class MainController implements Initializable {
 	@FXML
 	void DeviceTwo(MouseEvent event) throws ClientProtocolException, IOException {
 		
-		ZWave.create();
-		ZWave.Authenticate();
-		new Thread(()->{
-			try {
-				ZWave.post(8, 255);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		
+		
+		
+		
+		Service<Void> myservice = new Service<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				// TODO Auto-generated method stub
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						// TODO Auto-generated method stub
+						ZWave.create();
+						ZWave.Authenticate();
+						ZWave.post(8, 255);
+						return null;
+						
+					}
+					
+					@Override
+					protected void failed() {
+						System.out.println("Failed thread");
+					}
+					
+					@Override
+					protected void succeeded() {
+						if(deviceTwoImg.getImage()==lightOff) {
+							deviceTwoImg.setImage(lightOn);
+						}
+						else
+							deviceTwoImg.setImage(lightOff);
+					}
+					
+				};
 			}
-		}).start();
-		if (this.deviceTwoImg.getImage() == lightOff)
-		{
-			this.deviceTwoImg.setImage(this.lightOn);
-			//ZWave.post(?, 255);
-		}
-		else
-		{
-			this.deviceTwoImg.setImage(this.lightOff);
-			//ZWave.post(?, 0);
-		}
+
+			
+			
+		};
+		
+		myservice.start();
 	}
 	
 	@FXML
 	void DeviceThree(MouseEvent event) {
 		
-		new Thread(()->{
-			try {
-				ZWave.post(9, 255);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Service<Void> myservice = new Service<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				// TODO Auto-generated method stub
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						// TODO Auto-generated method stub
+						ZWave.create();
+						ZWave.Authenticate();
+						ZWave.post(9, 255);
+						return null;
+						
+					}
+					
+					@Override
+					protected void failed() {
+						System.out.println("Failed thread");
+					}
+					
+					@Override
+					protected void succeeded() {
+						if(deviceThreeImg.getImage()==lightOff) {
+							deviceThreeImg.setImage(lightOn);
+						}
+						else
+							deviceThreeImg.setImage(lightOff);
+					}
+					
+				};
 			}
-		}).start();
-		if (this.deviceThreeImg.getImage() == lightOff)
-		{
-			this.deviceThreeImg.setImage(this.lightOn);
-			//ZWave.post(?, 255);
-		}
-		else
-		{
-			this.deviceThreeImg.setImage(this.lightOff);
-			//ZWave.post(?, 0);
-		}
+
+			
+			
+		};
+		
+		myservice.start();
 	}
 
 	
@@ -294,34 +361,48 @@ public class MainController implements Initializable {
 	 @FXML
 	 void recClick(MouseEvent event) throws ClientProtocolException, IOException {
 		 
-		 ZWave.create();
-		 ZWave.Authenticate();
-		 if(this.recImage.getImage() == this.recOff)
-		 {
-			 this.recImage.setImage(this.recOn);
-			 new Thread(()-> {
-				try {
-					ZWave.toggleRec(3);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-			 }).start();
-		 }
-		 else
-		 {
-			 this.recImage.setImage(this.recOff);
-			 new Thread(()-> {
-				 try {
-					ZWave.toggleRec(3);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			 }).start();
-			 
-		 }
 		 
+		 
+			Service<Void> myservice = new Service<Void>() {
+
+				@Override
+				protected Task<Void> createTask() {
+					// TODO Auto-generated method stub
+					return new Task<Void>() {
+
+						@Override
+						protected Void call() throws Exception {
+							// TODO Auto-generated method stub
+							ZWave.create();
+							ZWave.Authenticate();
+							ZWave.toggleRec(3);
+							return null;
+							
+						}
+						
+						@Override
+						protected void failed() {
+							System.out.println("Failed thread");
+						}
+						
+						@Override
+						protected void succeeded() {
+							 if(recImage.getImage() == recOff)
+							 {
+								 recImage.setImage(recOn);
+								
+							 }
+							 else
+								 recImage.setImage(recOff);
+					}
+				};
+
+				
+				
+				};
+			};
+			
+			myservice.start();	
 		 	
 	 }
 	

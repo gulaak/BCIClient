@@ -8,9 +8,11 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.chart.XYChart;
 
-public class DataProcessing extends Thread {
+public class DataProcessing extends Service<Void> {
 	public static XYChart.Series<String,Number> myseries;
 	
 	public DataProcessing() {  // constructor for instance of thread
@@ -172,5 +174,20 @@ public class DataProcessing extends Thread {
     	Edk.INSTANCE.EE_EngineDisconnect();
     	System.out.println("Disconnected!");
     }
+
+	@Override
+	protected Task<Void> createTask() {
+		// TODO Auto-generated method stub
+		return new Task<Void>() {
+
+			@Override
+			protected Void call() throws Exception {
+				// TODO Auto-generated method stub
+				run();
+				return null;
+			}
+			
+		};
+	}
 }
 
