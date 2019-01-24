@@ -104,11 +104,13 @@ public class ZWave {
 		
 		
 	}
+	public static void sliderPost(int device, int brightness) throws ClientProtocolException, IOException {
+	  	
+	  	HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+Integer.toString(device) +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(brightness)+"%29");
+	  	HttpResponse postResponse = client.execute(postStatus);
+	  	postStatus.releaseConnection();
+	  	System.out.println(postResponse.toString());
+		
 
-	
-	
-	
-	
-	
-
+	}
 }

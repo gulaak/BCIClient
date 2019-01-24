@@ -221,9 +221,10 @@ public class MainController implements Initializable {
 		
 	}
 	@FXML
-	void sliderOneChanged(MouseEvent event) {
+	void sliderOneChanged(MouseEvent event){
 		int brightness = (int)(Math.floor(SliderD1.getValue()));
 		D1Status.setText(Integer.toString(brightness));
+		DeviceOne(brightness);
 	}
 	
 	
@@ -232,6 +233,7 @@ public class MainController implements Initializable {
     void sliderTwoChanged(MouseEvent event) {
     	int brightness = (int)(Math.floor(SliderD2.getValue()));
 		D2Status.setText(Integer.toString(brightness));
+		DeviceTwo(brightness);
 
     }
 	
@@ -239,13 +241,14 @@ public class MainController implements Initializable {
     void sliderThreeChanged(MouseEvent event) {
     	int brightness = (int)(Math.floor(SliderD3.getValue()));
 		D3Status.setText(Integer.toString(brightness));
+		DeviceThree(brightness);
 
     }
 	
 	
 	
 	@FXML
-	void DeviceTwo(MouseEvent event) throws ClientProtocolException, IOException {
+	void DeviceTwo(MouseEvent event) {
 		
 		
 		
@@ -359,7 +362,7 @@ public class MainController implements Initializable {
 	 }
 	 
 	 @FXML
-	 void recClick(MouseEvent event) throws ClientProtocolException, IOException {
+	 void recClick(MouseEvent event){
 		 
 		 
 		 
@@ -405,6 +408,151 @@ public class MainController implements Initializable {
 			myservice.start();	
 		 	
 	 }
+	 
+	 
+		void DeviceOne(int brightness) {
+
+			
+			Service<Void> myservice = new Service<Void>() {
+
+				@Override
+				protected Task<Void> createTask() {
+					// TODO Auto-generated method stub
+					return new Task<Void>() {
+
+						@Override
+						protected Void call() throws Exception {
+							// TODO Auto-generated method stub
+							ZWave.create();
+							ZWave.Authenticate();
+							ZWave.sliderPost(7, 255);
+							return null;
+							
+						}
+						
+						@Override
+						protected void failed() {
+							System.out.println("Failed thread");
+						}
+						
+						@Override
+						protected void succeeded() {
+							if(deviceOneImg.getImage()==lightOff) {
+								deviceOneImg.setImage(lightOn);
+							}
+							else
+								deviceOneImg.setImage(lightOff);
+						}
+						
+					};
+				}
+
+				
+				
+			};
+			
+			myservice.start();
+			
+			
+			
+				
+			
+		}
+		
+		
+		
+		void DeviceTwo(int brightness)  {
+			
+			
+			
+			
+			
+			Service<Void> myservice = new Service<Void>() {
+
+				@Override
+				protected Task<Void> createTask() {
+					// TODO Auto-generated method stub
+					return new Task<Void>() {
+
+						@Override
+						protected Void call() throws Exception {
+							// TODO Auto-generated method stub
+							ZWave.create();
+							ZWave.Authenticate();
+							ZWave.sliderPost(8, brightness);
+							return null;
+							
+						}
+						
+						@Override
+						protected void failed() {
+							System.out.println("Failed thread");
+						}
+						
+						@Override
+						protected void succeeded() {
+							if(deviceTwoImg.getImage()==lightOff) {
+								deviceTwoImg.setImage(lightOn);
+							}
+							else
+								deviceTwoImg.setImage(lightOff);
+						}
+						
+					};
+				}
+
+				
+				
+			};
+			
+			myservice.start();
+		}
+		
+		
+		
+		void DeviceThree(int brightness) {
+			
+			Service<Void> myservice = new Service<Void>() {
+
+				@Override
+				protected Task<Void> createTask() {
+					// TODO Auto-generated method stub
+					return new Task<Void>() {
+
+						@Override
+						protected Void call() throws Exception {
+							// TODO Auto-generated method stub
+							ZWave.create();
+							ZWave.Authenticate();
+							ZWave.sliderPost(9, brightness);
+							return null;
+							
+						}
+						
+						@Override
+						protected void failed() {
+							System.out.println("Failed thread");
+						}
+						
+						@Override
+						protected void succeeded() {
+							if(deviceThreeImg.getImage()==lightOff) {
+								deviceThreeImg.setImage(lightOn);
+							}
+							else
+								deviceThreeImg.setImage(lightOff);
+						}
+						
+					};
+				}
+
+				
+				
+			};
+			
+			myservice.start();
+		}
+
 	
 	
 

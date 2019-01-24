@@ -59,8 +59,9 @@ public class Main extends Application
 		
 		controllerInterface.mc.RTG.setAnimated(false);
 		Test thread = new Test();
+		thread.setDaemon(true);
 	    thread.start();
-	   // thread.setDaemon(true);
+	   
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		 
@@ -78,20 +79,7 @@ public class Main extends Application
     	
     }
     
-    public static void timerStart(boolean startValue) {
-    	if (startValue == true) {
-    		timeout = true;
-    		//Wait 10 seconds for head set
-    		timer.schedule(new TimerTask() {
-    			  @Override
-    			  public void run() {
-    			    timeout = false;
-    			    System.out.println("Timeout");
-    			  }
-    			}, 10000);
-    	}
-    }
-   
+    
     
     
 
