@@ -12,8 +12,8 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.chart.XYChart;
 
-public class DataProcessing extends Service<Void> {
-	public static XYChart.Series<String,Number> myseries;
+public class DataProcessing extends Thread {
+	public XYChart.Series<String,Number> myseries;
 	
 	public DataProcessing() {  // constructor for instance of thread
 		this.myseries = new XYChart.Series<>();
@@ -21,7 +21,8 @@ public class DataProcessing extends Service<Void> {
 	
 	public void run()
 	{
-		
+		controllerInterface.mc.RTG.getData().add(this.myseries); // add graphing series
+		System.out.println("Running");
 		try {
 			CSVLogger.create();
 		} catch (IOException e) {
@@ -39,18 +40,7 @@ public class DataProcessing extends Service<Void> {
 			e.printStackTrace();
 		}
     	
-    	//try {
-    	//	ZWave.create();
-    	//	ZWave.Authenticate();
-		//	ZWave.post(2,255);
-		//} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//} catch (IOException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	
+   	
     	Pointer eEvent			= Edk.INSTANCE.EE_EmoEngineEventCreate();
     	Pointer eState			= Edk.INSTANCE.EE_EmoStateCreate();
     	IntByReference userID 	= null;
@@ -127,10 +117,8 @@ public class DataProcessing extends Service<Void> {
 					String timestampstr = Float.toString(timestamp);
 					
 					Platform.runLater(()->{  // plots in application thread.
-						if(this.myseries.getData().toArray().length >= 10) {
+						if(this.myseries.getData().toArray().length >= 10) 
 							this.myseries.getData().remove(0); 
-							this.myseries.getData().add(new XYChart.Data<String,Number>(timestampstr,EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)));
-						}
 						else
 							this.myseries.getData().add(new XYChart.Data<String,Number>(timestampstr,EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)));
 						
@@ -174,20 +162,6 @@ public class DataProcessing extends Service<Void> {
     	Edk.INSTANCE.EE_EngineDisconnect();
     	System.out.println("Disconnected!");
     }
-
-	@Override
-	protected Task<Void> createTask() {
-		// TODO Auto-generated method stub
-		return new Task<Void>() {
-
-			@Override
-			protected Void call() throws Exception {
-				// TODO Auto-generated method stub
-				run();
-				return null;
-			}
-			
-		};
-	}
 }
 
+	

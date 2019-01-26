@@ -29,11 +29,10 @@
                      <children>
                         <ChoiceBox fx:id="choiceBox" layoutX="483.0" layoutY="9.0" prefHeight="25.0" prefWidth="87.0" />
                         <Label fx:id="D1Status" layoutX="72.0" layoutY="87.0" text="D1Status" />
-                        <Label fx:id="D2Status" layoutX="222.0" layoutY="87.0" text="D2Status" />
+                        <Label fx:id="D2Status" layoutX="253.0" layoutY="87.0" text="D2Status" />
                         <Label fx:id="D3Status" layoutX="80.0" layoutY="260.0" text="D3Status" />
                         <Slider fx:id="SliderD3" blockIncrement="5.0" layoutX="34.0" layoutY="180.0" max="255.0" onMouseClicked="#sliderThreeChanged" />
                         <Slider fx:id="SliderD1" blockIncrement="5.0" layoutX="26.0" layoutY="7.0" max="255.0" onMouseClicked="#sliderOneChanged" />
-                        <Slider fx:id="SliderD2" blockIncrement="5.0" layoutX="190.0" layoutY="7.0" max="255.0" onMouseClicked="#sliderTwoChanged" />
                         <Label layoutX="451.0" layoutY="238.0" text="Target Network" />
                         <VBox fx:id="vbox" layoutX="431.0" layoutY="271.0" prefHeight="46.0" prefWidth="144.0">
                            <children>
@@ -50,10 +49,11 @@
                         <Label layoutX="445.0" layoutY="139.0" text="Signal" />
                         <Label layoutX="445.0" layoutY="172.0" text="Battery" />
                         <ImageView fx:id="deviceOneImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="34.0" onMouseClicked="#DeviceOne" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="deviceTwoImg" fitHeight="45.0" fitWidth="62.0" layoutX="215.0" layoutY="34.0" onMouseClicked="#DeviceTwo" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="deviceTwoImg" fitHeight="45.0" fitWidth="62.0" layoutX="253.0" layoutY="34.0" onMouseClicked="#DeviceTwo" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="deviceThreeImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="203.0" onMouseClicked="#DeviceThree" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="recImage" fitHeight="45.0" fitWidth="62.0" layoutX="222.0" layoutY="203.0" onMouseClicked="#recClick" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="recStatus" layoutX="234.0" layoutY="260.0" text="RecStatus" />
+                        <Slider fx:id="SliderD2" blockIncrement="5.0" layoutX="207.0" layoutY="7.0" max="255.0" onMouseClicked="#sliderTwoChange" />
                      </children></AnchorPane>
             </content>
           </Tab>

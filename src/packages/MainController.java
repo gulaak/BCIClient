@@ -230,10 +230,17 @@ public class MainController implements Initializable {
 	
 	
 	@FXML
-    void sliderTwoChanged(MouseEvent event) {
+    void sliderTwoChange(MouseEvent event) {
+		
     	int brightness = (int)(Math.floor(SliderD2.getValue()));
 		D2Status.setText(Integer.toString(brightness));
 		DeviceTwo(brightness);
+
+    }
+	@FXML
+    void sliderTwoChanged(MouseEvent event) {
+		
+    	
 
     }
 	

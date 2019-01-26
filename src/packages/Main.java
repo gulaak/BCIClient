@@ -58,9 +58,12 @@ public class Main extends Application
 	    controllerInterface.mc = (MainController)loader.getController();
 		
 		controllerInterface.mc.RTG.setAnimated(false);
-		Test thread = new Test();
-		thread.setDaemon(true);
-	    thread.start();
+		DataProcessing thread = new DataProcessing();
+		
+		thread.start();
+//		Test thread = new Test();
+//		thread.setDaemon(true);
+//	    thread.start();
 	   
 		primaryStage.setScene(scene);
 		primaryStage.show();

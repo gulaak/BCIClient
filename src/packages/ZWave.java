@@ -53,8 +53,6 @@ public class ZWave {
 	public static int post(int device, int brightness) throws ClientProtocolException, IOException {
 		  //Gets the current status of the light
   	  	HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B" + Integer.toString(device) + "%5D.instances%5B0%5D.commandClasses.SwitchMultilevel.data.level.value");
-  	  	client = HttpClientBuilder.create().build();
-  	  	Authenticate();
   	  	HttpResponse statusResponse = client.execute(getStatus);
   	  	BufferedReader statusOut =  new BufferedReader(new InputStreamReader(statusResponse.getEntity().getContent()));
   	  	getStatus.releaseConnection();
