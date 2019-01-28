@@ -101,6 +101,10 @@ public class DataProcessing extends Thread {
 					
 					System.out.print("WirelessSignalStatus: ");
 					System.out.println(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+					Platform.runLater(()->{
+						controllerInterface.mc.getSignalProgress().setProgress(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+						
+					});
 					if(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)>0.9) {System.out.println("Action trigger Exiting...");
 					return;}
 					try {
@@ -114,7 +118,7 @@ public class DataProcessing extends Thread {
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState));
 					System.out.print("CurrentActionPower: ");
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState));
-					String timestampstr = Float.toString(timestamp);
+					String timestampstr = String.format("%.2f",timestamp);
 					
 					Platform.runLater(()->{  // plots in application thread.
 						if(this.myseries.getData().toArray().length >= 10) 

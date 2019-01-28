@@ -9,6 +9,8 @@ import javax.swing.event.ChangeEvent;
 
 import org.apache.http.client.ClientProtocolException;
 
+
+
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -30,9 +32,11 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Polygon;
 
 public class MainController implements Initializable {
 
@@ -116,6 +120,18 @@ public class MainController implements Initializable {
 
 	 @FXML
 	 private Label recStatus;
+	 
+	 @FXML
+	 private Polygon forwardPoly;
+
+	 @FXML
+	 private Polygon leftPoly;
+
+	 @FXML
+	 private Polygon rightPoly;
+
+	 @FXML
+	 private Polygon reversePoly;
 
 
 	
@@ -134,7 +150,7 @@ public class MainController implements Initializable {
 		this.deviceThreeImg.setImage(this.lightOff);
 		this.recImage.setImage(this.recOff);
 		this.home.setSelected(true);
-		this.signalProgress.setProgress(0.5);
+	
 		
 		
 		
@@ -220,6 +236,36 @@ public class MainController implements Initializable {
 			
 		
 	}
+	
+    @FXML
+    void keyPress(KeyEvent event) throws ClientProtocolException, IOException {
+    	System.out.println("Trigger" + event.getCode());
+    	switch(event.getCode()) {
+    		case W:
+    			System.out.println("Forward");
+    			ZWave.rcForward();
+    			break;
+    		case A:
+    			System.out.println("Left");
+    			ZWave.rcLeft();
+    			break;
+    		case D:
+    			System.out.println("Right");
+    			ZWave.rcRight();
+    			break;
+    		case S:
+    			System.out.println("Reverse");
+    			ZWave.rcReverse();
+    			break;
+			default:
+				break;
+    	
+    	}
+    	
+
+    }
+    
+    
 	@FXML
 	void sliderOneChanged(MouseEvent event){
 		int brightness = (int)(Math.floor(SliderD1.getValue()));
@@ -559,6 +605,17 @@ public class MainController implements Initializable {
 			
 			myservice.start();
 		}
+
+		public ProgressBar getSignalProgress() {
+			return signalProgress;
+		}
+
+		public void setSignalProgress(ProgressBar signalProgress) {
+			this.signalProgress = signalProgress;
+		}
+		
+
+
 
 	
 	

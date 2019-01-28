@@ -70,6 +70,34 @@ public class ZWave {
 		return 0;
 		
 	}
+	public static void rcForward() throws ClientProtocolException, IOException {
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(20)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+	
+		
+	}
+	public static void rcReverse() throws ClientProtocolException, IOException {
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(40)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+		
+		
+	}
+	public static void rcLeft() throws ClientProtocolException, IOException {
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(10)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+		
+		
+	}
+	public static void rcRight() throws ClientProtocolException, IOException {
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(30)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+		
+		
+	}
 	
 	public static boolean toggleRec(int device) throws ClientProtocolException, IOException {
 		HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5b" +Integer.toString(device)+"%5D.instances%5B0%5D.commandClasses.SwitchBinary.data.level.value");
@@ -111,4 +139,5 @@ public class ZWave {
 		
 
 	}
+	
 }
