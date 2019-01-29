@@ -58,10 +58,17 @@ public class DataProcessing extends Thread {
 			//Connect to EmoEngine
 			if (Edk.INSTANCE.EE_EngineRemoteConnect("127.0.0.1", enginePort, "Emotiv Systems-5") != EdkErrorCode.EDK_OK.ToInt()) {
 				System.out.println("Emotiv Engine start up failed.");
-				
+				Platform.runLater(()->{
+					controllerInterface.mc.getEmotivStatus().setText("Not Connected");
+					
+				});
 				return;
 			}
 			System.out.println("Connected to EmoEngine on [127.0.0.1]");
+			Platform.runLater(()->{
+				controllerInterface.mc.getEmotivStatus().setText("Connected");
+				
+			});
 			
 			break;
 		}
@@ -102,6 +109,14 @@ public class DataProcessing extends Thread {
 					System.out.print("WirelessSignalStatus: ");
 					System.out.println(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
 					Platform.runLater(()->{
+						IntByReference battery = new IntByReference();
+						IntByReference maxCharge = new IntByReference();
+						
+						EmoState.INSTANCE.ES_GetBatteryChargeLevel(eState, battery,maxCharge);
+						Double batteryDbl = (double)battery.getValue();
+						Double maxChargeDbl =(double)battery.getValue();
+						controllerInterface.mc.getBatteryProgress().setProgress(batteryDbl/maxChargeDbl);
+					
 						controllerInterface.mc.getSignalProgress().setProgress(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
 						
 					});

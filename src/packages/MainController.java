@@ -1,4 +1,5 @@
 package packages;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import org.apache.http.client.ClientProtocolException;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -137,6 +139,7 @@ public class MainController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		x.setLabel("Time");
 		y.setLabel("Power(0-1)");
 		x.setScaleX(1.00);
@@ -149,7 +152,7 @@ public class MainController implements Initializable {
 		this.deviceTwoImg.setImage(this.lightOff);
 		this.deviceThreeImg.setImage(this.lightOff);
 		this.recImage.setImage(this.recOff);
-		this.home.setSelected(true);
+		this.getHome().setSelected(true);
 	
 		
 		
@@ -201,8 +204,7 @@ public class MainController implements Initializable {
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-						ZWave.create();
-						ZWave.Authenticate();
+						
 						ZWave.post(7, 255);
 						return null;
 						
@@ -317,8 +319,7 @@ public class MainController implements Initializable {
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-						ZWave.create();
-						ZWave.Authenticate();
+						
 						ZWave.post(8, 255);
 						return null;
 						
@@ -361,8 +362,7 @@ public class MainController implements Initializable {
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-						ZWave.create();
-						ZWave.Authenticate();
+						
 						ZWave.post(9, 255);
 						return null;
 						
@@ -429,8 +429,7 @@ public class MainController implements Initializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.create();
-							ZWave.Authenticate();
+							
 							ZWave.toggleRec(3);
 							return null;
 							
@@ -476,9 +475,7 @@ public class MainController implements Initializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.create();
-							ZWave.Authenticate();
-							ZWave.sliderPost(7, 255);
+							ZWave.sliderPost(7, brightness);
 							return null;
 							
 						}
@@ -490,7 +487,7 @@ public class MainController implements Initializable {
 						
 						@Override
 						protected void succeeded() {
-							if(deviceOneImg.getImage()==lightOff) {
+							if(brightness > 0) {
 								deviceOneImg.setImage(lightOn);
 							}
 							else
@@ -530,8 +527,7 @@ public class MainController implements Initializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.create();
-							ZWave.Authenticate();
+							
 							ZWave.sliderPost(8, brightness);
 							return null;
 							
@@ -544,7 +540,7 @@ public class MainController implements Initializable {
 						
 						@Override
 						protected void succeeded() {
-							if(deviceTwoImg.getImage()==lightOff) {
+							if(brightness > 0) {
 								deviceTwoImg.setImage(lightOn);
 							}
 							else
@@ -575,8 +571,7 @@ public class MainController implements Initializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.create();
-							ZWave.Authenticate();
+							
 							ZWave.sliderPost(9, brightness);
 							return null;
 							
@@ -589,7 +584,7 @@ public class MainController implements Initializable {
 						
 						@Override
 						protected void succeeded() {
-							if(deviceThreeImg.getImage()==lightOff) {
+							if(brightness > 0) {
 								deviceThreeImg.setImage(lightOn);
 							}
 							else
@@ -612,6 +607,38 @@ public class MainController implements Initializable {
 
 		public void setSignalProgress(ProgressBar signalProgress) {
 			this.signalProgress = signalProgress;
+		}
+
+		public Label getEmotivStatus() {
+			return emotivStatus;
+		}
+
+		public void setEmotivStatus(Label emotivStatus) {
+			this.emotivStatus = emotivStatus;
+		}
+
+		public ProgressBar getBatteryProgress() {
+			return batteryProgress;
+		}
+
+		public void setBatteryProgress(ProgressBar batteryProgress) {
+			this.batteryProgress = batteryProgress;
+		}
+		
+		@FXML
+		void shutdown(ActionEvent event) {
+			Platform.exit();
+			System.exit(0);
+			System.out.println("Exit");
+
+		}
+
+		public RadioButton getHome() {
+			return home;
+		}
+
+		public void setHome(RadioButton home) {
+			this.home = home;
 		}
 		
 

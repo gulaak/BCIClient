@@ -53,20 +53,23 @@ public class Main extends Application
 		Pane pane = loader.load();
 		
 		Scene scene = new Scene(pane);
+		
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 		
 	    controllerInterface.mc = (MainController)loader.getController();
 		
 		controllerInterface.mc.RTG.setAnimated(false);
 		DataProcessing thread = new DataProcessing();
-		
+		thread.setDaemon(true);
 		thread.start();
+		
 //		Test thread = new Test();
 //		thread.setDaemon(true);
 //	    thread.start();
 	   
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		primaryStage.setOnCloseRequest(e -> shutdown());
 		 
 		
     	
@@ -80,6 +83,11 @@ public class Main extends Application
     
     	
     	
+    }
+    public static void shutdown() {
+    	System.out.println("Closed");
+    	Platform.exit();
+    	System.exit(0);
     }
     
     
