@@ -43,6 +43,7 @@ public class ZWave {
 		String json = "{\"form\":\"true\" ,\"login\":\"admin\",\"password\":\"ece6123\",\"keepme\":\"false\", \"default_ui\":\"1\"}";
 		StringEntity entity = new StringEntity(json);
 		request.setEntity(entity);
+		System.out.println(entity);
 		HttpResponse statusResponse = client.execute(request);
 		System.out.println(statusResponse.toString());
 	
@@ -71,28 +72,36 @@ public class ZWave {
 		
 	}
 	public static void rcForward() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(20)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B10%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(20)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 	
 		
 	}
 	public static void rcReverse() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(40)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B10%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(40)+"%29");
+		HttpResponse postResponse = client.execute(postStatus);
+		postStatus.releaseConnection();
+		
+		
+	}
+	
+	public static void rcStop() throws ClientProtocolException, IOException {
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B10%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(0)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		
 		
 	}
 	public static void rcLeft() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(10)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B10%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(10)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		
 		
 	}
 	public static void rcRight() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B5%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(30)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B10%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(30)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		

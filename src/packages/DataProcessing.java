@@ -120,8 +120,6 @@ public class DataProcessing extends Thread {
 						controllerInterface.mc.getSignalProgress().setProgress(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
 						
 					});
-					if(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)>0.9) {System.out.println("Action trigger Exiting...");
-					return;}
 					try {
 						CSVLogger.log(EmoState.INSTANCE.ES_GetTimeFromStart(eState),Integer.toString(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)),EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState),EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
 					} catch (IOException e) {
@@ -143,11 +141,12 @@ public class DataProcessing extends Thread {
 						
 					});
 					
+					
 					//Check for pushing action at a power over 0.5 and timeout false
 					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) ==2 ) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 						LightTimer.initTimer();
 						try {
-							ZWave.post(2, 255);
+							ZWave.post(7, 255);
 						} catch (ClientProtocolException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

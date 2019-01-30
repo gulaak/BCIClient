@@ -260,6 +260,7 @@ public class MainController implements Initializable {
     			ZWave.rcReverse();
     			break;
 			default:
+				ZWave.rcStop();
 				break;
     	
     	}
