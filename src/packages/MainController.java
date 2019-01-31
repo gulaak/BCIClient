@@ -79,6 +79,9 @@ public class MainController implements Initializable {
 
 	 @FXML
 	 private Label D1Status;
+	 
+	 @FXML
+	 private ToggleGroup TG3;
 
      @FXML
 	 private Label D2Status;
@@ -175,6 +178,12 @@ public class MainController implements Initializable {
 	 
 	 @FXML
 	 private ToggleButton sceneSave;
+	 
+	 @FXML
+	 private RadioButton cognitive;
+
+	 @FXML
+	 private RadioButton expressive;
 	 
 	
 	@Override
@@ -692,6 +701,14 @@ public class MainController implements Initializable {
 
 		public void setHome(RadioButton home) {
 			this.home = home;
+		}
+
+		public RadioButton getCognitive() {
+			return cognitive;
+		}
+
+		public void setCognitive(RadioButton cognitive) {
+			this.cognitive = cognitive;
 		}
 		
 
