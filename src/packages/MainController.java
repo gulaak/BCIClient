@@ -285,7 +285,7 @@ public class MainController implements Initializable {
 	}
 
 			
-	}
+
 	
     @FXML
     void keyPress(KeyEvent event) throws ClientProtocolException, IOException {
