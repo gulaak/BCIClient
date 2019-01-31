@@ -68,6 +68,7 @@ public class Main extends Application
 //	    thread.start();
 	   
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(true);
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(e -> shutdown());
 		 
