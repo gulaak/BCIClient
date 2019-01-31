@@ -63,10 +63,11 @@ public class Main extends Application
 		DataProcessing thread = new DataProcessing();
 		thread.setDaemon(true);
 		thread.start();
-		
+
 
 	   
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(true);
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(e -> shutdown());
 		 

@@ -11,17 +11,26 @@ import javax.swing.event.ChangeEvent;
 import org.apache.http.client.ClientProtocolException;
 
 
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+
+
 
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,10 +41,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -59,6 +70,7 @@ public class MainController implements Initializable {
 	 private Image recOn;
 	 
 	
+	
 	 @FXML
 	 private TabPane MainTabs;
 
@@ -73,6 +85,9 @@ public class MainController implements Initializable {
 
 	 @FXML
 	 private Label D3Status;
+	 
+	 @FXML
+	 private Label sceneSliderStatus;
 
 	 @FXML
 	 private Slider SliderD3;
@@ -82,6 +97,11 @@ public class MainController implements Initializable {
 
 	 @FXML
 	 private Slider SliderD2;
+	 
+	 @FXML
+	 private Slider sceneSlider;
+	 
+	 
 
 	 @FXML
 	 private VBox vbox;
@@ -91,9 +111,18 @@ public class MainController implements Initializable {
 
 	 @FXML
 	 private ToggleGroup TG1;
-
+	 
+	 @FXML
+	 private ToggleGroup TG2;
+	 
 	 @FXML
 	 private RadioButton wheelChair;
+	 
+	 @FXML
+	 private RadioButton on;
+
+	 @FXML
+	 private RadioButton off;
 	 
 	 @FXML
 	 private ImageView deviceOneImg;
@@ -141,7 +170,12 @@ public class MainController implements Initializable {
 	 @FXML
 	 private Polygon reversePoly;
 
-
+	 @FXML
+	 private ListView<String> sceneListView;
+	 
+	 @FXML
+	 private ToggleButton sceneSave;
+	 
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -149,6 +183,9 @@ public class MainController implements Initializable {
 		x.setLabel("Time");
 		y.setLabel("Power(0-1)");
 		x.setScaleX(1.00);
+		sceneListView.setItems(FXCollections.observableArrayList("Pull" , "Push" , "Left"));
+		sceneListView.getSelectionModel().getSelectedItem();
+		TG1.selectToggle(off);
 		this.lightOn = new Image("/LightOn.PNG"); //grab image for GUI
 		this.lightOff = new Image("/LightOff.PNG"); // grab image for GUI
 		this.recOff = new Image("/RecOff.PNG");
@@ -159,6 +196,7 @@ public class MainController implements Initializable {
 		this.deviceThreeImg.setImage(this.lightOff);
 		this.recImage.setImage(this.recOff);
 		this.getHome().setSelected(true);
+		
 	
 		
 		
@@ -232,18 +270,21 @@ public class MainController implements Initializable {
 						else
 							deviceOneImg.setImage(lightOff);
 
+
 					
 					}
-			};
+				};
 
-		}
-	};
+			}
+		};
 		
 			
 
 		myservice.start();
-				
 
+	}
+
+			
 	}
 	
     @FXML
@@ -286,17 +327,11 @@ public class MainController implements Initializable {
 	
 	
 	@FXML
-    void sliderTwoChange(MouseEvent event) {
+    void sliderTwoChanged(MouseEvent event) {
 		
     	int brightness = (int)(Math.floor(SliderD2.getValue()));
 		D2Status.setText(Integer.toString(brightness));
 		DeviceTwo(brightness);
-
-    }
-	@FXML
-    void sliderTwoChanged(MouseEvent event) {
-		
-    	
 
     }
 	
@@ -308,13 +343,20 @@ public class MainController implements Initializable {
 
     }
 	
-	
-	
-	
-		
-		
 	@FXML
-	void DeviceTwo(MouseEvent event) throws ClientProtocolException, IOException {
+	void sceneSliderChanged(MouseEvent event){
+		int sliderValue = (int)(Math.floor(sceneSlider.getValue()));
+		sceneSliderStatus.setText(Integer.toString(sliderValue));
+		//DeviceOne(sliderValue);
+	}
+
+	@FXML
+	void DeviceTwo(MouseEvent event) {
+		
+		
+		
+		
+
 
 		
 		Service<Void> myservice = new Service<Void>() {
@@ -328,7 +370,6 @@ public class MainController implements Initializable {
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
 
-						
 						ZWave.post(8, 255);
 						return null;
 						
@@ -346,6 +387,7 @@ public class MainController implements Initializable {
 						}
 						else
 							deviceTwoImg.setImage(lightOff);
+
 					}
 				};
 			};
@@ -354,7 +396,6 @@ public class MainController implements Initializable {
 			
 		};
 		
-
 
 		myservice.start();
 	}
@@ -372,8 +413,6 @@ public class MainController implements Initializable {
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-
-						
 						ZWave.post(9, 255);
 						return null;
 						
@@ -391,6 +430,7 @@ public class MainController implements Initializable {
 						}
 						else
 							deviceThreeImg.setImage(lightOff);
+
 					}
 				};
 			};
@@ -636,6 +676,7 @@ public class MainController implements Initializable {
 		public void setBatteryProgress(ProgressBar batteryProgress) {
 			this.batteryProgress = batteryProgress;
 		}
+		
 		
 		@FXML
 		void shutdown(ActionEvent event) {

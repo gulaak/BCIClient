@@ -1,5 +1,10 @@
 package packages;
 
-public class Scenes {
+import java.io.Serializable;
 
+public class Scenes implements Serializable {
+	
+	
+	
+	
 }

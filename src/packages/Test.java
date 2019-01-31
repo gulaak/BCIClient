@@ -47,6 +47,7 @@ public class Test extends Thread {
 							if(this.myseries.getData().toArray().length >= 10) {
 								this.myseries.getData().remove(0); 
 
+<<<<<<< HEAD
 							}	
 							this.myseries.getData().add(new XYChart.Data<String,Number>(Integer.toString(curr),(new Random().nextDouble())));
 
@@ -54,6 +55,11 @@ public class Test extends Thread {
 							
 							curr++;		
 							
+=======
+							}
+							this.myseries.getData().add(new XYChart.Data<String,Number>(Integer.toString(curr),(new Random().nextDouble())));
+
+>>>>>>> fx
 						
 						
 						
