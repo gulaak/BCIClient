@@ -1,7 +1,12 @@
 package packages;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -39,6 +44,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -57,7 +63,7 @@ import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 
-public class MainController implements Initializable {
+public class MainController implements Initializable, Serializable {
 
 	
 	
@@ -69,7 +75,7 @@ public class MainController implements Initializable {
 	 
 	 private Image recOn;
 	 
-	
+	 private String settingsFileName = "sceneSettings.txt";
 	
 	 @FXML
 	 private TabPane MainTabs;
@@ -102,7 +108,7 @@ public class MainController implements Initializable {
 	 private Slider SliderD2;
 	 
 	 @FXML
-	 private Slider sceneSlider;
+	 public Slider sceneSlider;
 	 
 	 
 
@@ -116,7 +122,7 @@ public class MainController implements Initializable {
 	 private ToggleGroup TG1;
 	 
 	 @FXML
-	 private ToggleGroup TG2;
+	 public ToggleGroup TG2;
 	 
 	 @FXML
 	 private RadioButton wheelChair;
@@ -177,7 +183,9 @@ public class MainController implements Initializable {
 	 private ListView<String> sceneListView;
 	 
 	 @FXML
-	 private ToggleButton sceneSave;
+	 private Button sceneSave;
+	 
+	 public Scenes commandSettings;
 	 
 	 @FXML
 	 private RadioButton cognitive;
@@ -206,6 +214,13 @@ public class MainController implements Initializable {
 		this.recImage.setImage(this.recOff);
 		this.getHome().setSelected(true);
 		
+		this.sceneSlider.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				int sliderValue = (int)(Math.floor(sceneSlider.getValue()));
+				sceneSliderStatus.setText(Integer.toString(sliderValue));
+			}
+		});
+		commandSettings = new Scenes(TG2, (int)sceneSlider.getValue());
 	
 		
 		
@@ -352,12 +367,6 @@ public class MainController implements Initializable {
 
     }
 	
-	@FXML
-	void sceneSliderChanged(MouseEvent event){
-		int sliderValue = (int)(Math.floor(sceneSlider.getValue()));
-		sceneSliderStatus.setText(Integer.toString(sliderValue));
-		//DeviceOne(sliderValue);
-	}
 
 	@FXML
 	void DeviceTwo(MouseEvent event) {
@@ -474,6 +483,29 @@ public class MainController implements Initializable {
 	 void slider1Move(TouchEvent event) {
 
 	 }
+	 
+	 @FXML
+	 public void saveScene()
+		{
+			try {
+				FileOutputStream settings = new FileOutputStream(settingsFileName);
+				ObjectOutputStream save = new ObjectOutputStream(settings); 
+				
+				save.writeObject(commandSettings);
+				System.out.println("good");
+				
+				save.close();
+				settings.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("bad1");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("bad2");
+			}
+		}
 	 
 	 @FXML
 	 void recClick(MouseEvent event){
@@ -710,6 +742,7 @@ public class MainController implements Initializable {
 		public void setCognitive(RadioButton cognitive) {
 			this.cognitive = cognitive;
 		}
+		
 		
 
 

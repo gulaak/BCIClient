@@ -93,9 +93,9 @@
                               <ToggleGroup fx:id="TG2" />
                            </toggleGroup></RadioButton>
                         <RadioButton fx:id="off" layoutX="380.0" layoutY="145.0" mnemonicParsing="false" text="Off" toggleGroup="$TG2" />
-                        <Slider fx:id="sceneSlider" layoutX="365.0" layoutY="224.0" onMouseClicked="#sceneSliderChanged" />
-                        <Label fx:id="sceneSliderStatus" layoutX="410.0" layoutY="256.0" text="0" />
-                        <ToggleButton fx:id="sceneSave" layoutX="364.0" layoutY="299.0" mnemonicParsing="false" text="ToggleButton" />
+                        <Slider fx:id="sceneSlider" layoutX="365.0" layoutY="224.0" />
+                        <Label fx:id="sceneSliderStatus" layoutX="431.0" layoutY="256.0" text="0" />
+                        <Button fx:id="sceneSave" layoutX="403.0" layoutY="300.0" mnemonicParsing="false" onAction="#saveScene" text="Save" />
                      </children></AnchorPane>
               </content>
             </Tab>
