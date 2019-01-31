@@ -141,33 +141,9 @@ public class DataProcessing extends Thread {
 						
 					});
 					
+					Dispatcher.checkNetwork();
+					Dispatcher.call(eState);
 					
-					//Check for pushing action at a power over 0.5 and timeout false
-					if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) ==2 ) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
-						LightTimer.initTimer();
-						try {
-							ZWave.post(7, 255);
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==4 && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
-						LightTimer.initTimer();
-						try {
-							ZWave.toggleRec(3);
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					
-					}
 				}
 				
 			}
