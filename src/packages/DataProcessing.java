@@ -8,10 +8,12 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.chart.XYChart;
 
 public class DataProcessing extends Thread {
-	public static XYChart.Series<String,Number> myseries;
+	public XYChart.Series<String,Number> myseries;
 	
 	public DataProcessing() {  // constructor for instance of thread
 		this.myseries = new XYChart.Series<>();
@@ -19,7 +21,8 @@ public class DataProcessing extends Thread {
 	
 	public void run()
 	{
-		
+		controllerInterface.mc.RTG.getData().add(this.myseries); // add graphing series
+		System.out.println("Running");
 		try {
 			CSVLogger.create();
 		} catch (IOException e) {
@@ -37,18 +40,7 @@ public class DataProcessing extends Thread {
 			e.printStackTrace();
 		}
     	
-    	//try {
-    	//	ZWave.create();
-    	//	ZWave.Authenticate();
-		//	ZWave.post(2,255);
-		//} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//} catch (IOException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	
+   	
     	Pointer eEvent			= Edk.INSTANCE.EE_EmoEngineEventCreate();
     	Pointer eState			= Edk.INSTANCE.EE_EmoStateCreate();
     	IntByReference userID 	= null;
@@ -66,10 +58,17 @@ public class DataProcessing extends Thread {
 			//Connect to EmoEngine
 			if (Edk.INSTANCE.EE_EngineRemoteConnect("127.0.0.1", enginePort, "Emotiv Systems-5") != EdkErrorCode.EDK_OK.ToInt()) {
 				System.out.println("Emotiv Engine start up failed.");
-				
+				Platform.runLater(()->{
+					controllerInterface.mc.getEmotivStatus().setText("Not Connected");
+					
+				});
 				return;
 			}
 			System.out.println("Connected to EmoEngine on [127.0.0.1]");
+			Platform.runLater(()->{
+				controllerInterface.mc.getEmotivStatus().setText("Connected");
+				
+			});
 			
 			break;
 		}
@@ -109,6 +108,18 @@ public class DataProcessing extends Thread {
 					
 					System.out.print("WirelessSignalStatus: ");
 					System.out.println(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+					Platform.runLater(()->{
+						IntByReference battery = new IntByReference();
+						IntByReference maxCharge = new IntByReference();
+						
+						EmoState.INSTANCE.ES_GetBatteryChargeLevel(eState, battery,maxCharge);
+						Double batteryDbl = (double)battery.getValue();
+						Double maxChargeDbl =(double)battery.getValue();
+						controllerInterface.mc.getBatteryProgress().setProgress(batteryDbl/maxChargeDbl);
+					
+						controllerInterface.mc.getSignalProgress().setProgress(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+						
+					});
 					if(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)>0.9) {System.out.println("Action trigger Exiting...");
 					return;}
 					try {
@@ -122,13 +133,11 @@ public class DataProcessing extends Thread {
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState));
 					System.out.print("CurrentActionPower: ");
 					System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState));
-					String timestampstr = Float.toString(timestamp);
+					String timestampstr = String.format("%.2f",timestamp);
 					
 					Platform.runLater(()->{  // plots in application thread.
-						if(this.myseries.getData().toArray().length >= 10) {
+						if(this.myseries.getData().toArray().length >= 10) 
 							this.myseries.getData().remove(0); 
-							this.myseries.getData().add(new XYChart.Data<String,Number>(timestampstr,EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)));
-						}
 						else
 							this.myseries.getData().add(new XYChart.Data<String,Number>(timestampstr,EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState)));
 						
@@ -174,3 +183,4 @@ public class DataProcessing extends Thread {
     }
 }
 
+	

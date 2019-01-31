@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.Double?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -19,26 +22,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packages.MainController">
    
    <children>
    
-      	<TabPane fx:id="MainTabs" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      	<TabPane fx:id="MainTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     
 
         <tabs>
           <Tab text="Home">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" onTouchReleased="#slider1Move" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#sliderTwoChanged" onTouchReleased="#slider1Move" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ChoiceBox fx:id="choiceBox" layoutX="483.0" layoutY="9.0" prefHeight="25.0" prefWidth="87.0" />
                         <Label fx:id="D1Status" layoutX="72.0" layoutY="87.0" text="D1Status" />
-                        <Label fx:id="D2Status" layoutX="222.0" layoutY="87.0" text="D2Status" />
+                        <Label fx:id="D2Status" layoutX="253.0" layoutY="87.0" text="D2Status" />
                         <Label fx:id="D3Status" layoutX="80.0" layoutY="260.0" text="D3Status" />
-                        <Slider fx:id="SliderD3" blockIncrement="5.0" layoutX="34.0" layoutY="180.0" max="255.0" />
-                        <Slider fx:id="SliderD1" blockIncrement="5.0" layoutX="26.0" layoutY="7.0" max="255.0" />
-                        <Slider fx:id="SliderD2" blockIncrement="5.0" layoutX="190.0" layoutY="7.0" max="255.0" />
+                        <Slider fx:id="SliderD3" blockIncrement="5.0" layoutX="34.0" layoutY="180.0" onMouseClicked="#sliderThreeChanged" />
+                        <Slider fx:id="SliderD1" blockIncrement="5.0" layoutX="26.0" layoutY="7.0" onMouseClicked="#sliderOneChanged" />
                         <Label layoutX="451.0" layoutY="238.0" text="Target Network" />
                         <VBox fx:id="vbox" layoutX="431.0" layoutY="271.0" prefHeight="46.0" prefWidth="144.0">
                            <children>
@@ -55,10 +58,11 @@
                         <Label layoutX="445.0" layoutY="139.0" text="Signal" />
                         <Label layoutX="445.0" layoutY="172.0" text="Battery" />
                         <ImageView fx:id="deviceOneImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="34.0" onMouseClicked="#DeviceOne" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="deviceTwoImg" fitHeight="45.0" fitWidth="62.0" layoutX="215.0" layoutY="34.0" onMouseClicked="#DeviceTwo" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="deviceTwoImg" fitHeight="45.0" fitWidth="62.0" layoutX="253.0" layoutY="34.0" onMouseClicked="#DeviceTwo" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="deviceThreeImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="203.0" onMouseClicked="#DeviceThree" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="recImage" fitHeight="45.0" fitWidth="62.0" layoutX="222.0" layoutY="203.0" onMouseClicked="#recClick" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="recStatus" layoutX="234.0" layoutY="260.0" text="RecStatus" />
+                        <Slider fx:id="SliderD2" blockIncrement="5.0" layoutX="207.0" layoutY="7.0" onMouseClicked="#sliderTwoChanged" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -79,12 +83,38 @@
           </Tab>
             <Tab text="Scenes">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="sceneListView" layoutX="35.0" layoutY="34.0" prefHeight="91.0" prefWidth="206.0" />
+                        <RadioButton fx:id="on" layoutX="380.0" layoutY="74.0" mnemonicParsing="false" text="On">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG2" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="off" layoutX="380.0" layoutY="145.0" mnemonicParsing="false" text="Off" toggleGroup="$TG2" />
+                        <Slider fx:id="sceneSlider" layoutX="365.0" layoutY="224.0" onMouseClicked="#sceneSliderChanged" />
+                        <Label fx:id="sceneSliderStatus" layoutX="410.0" layoutY="256.0" text="0" />
+                        <ToggleButton fx:id="sceneSave" layoutX="364.0" layoutY="299.0" mnemonicParsing="false" text="ToggleButton" />
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Wheel Chair">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane focusTraversable="true" minHeight="0.0" minWidth="0.0" onKeyPressed="#keyPress" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Polygon fx:id="forwardPoly" fill="DODGERBLUE" layoutX="267.0" layoutY="93.0" stroke="BLACK" strokeType="INSIDE">
+                          <points>
+                            <Double fx:value="-50.0" />
+                            <Double fx:value="40.0" />
+                            <Double fx:value="50.0" />
+                            <Double fx:value="40.0" />
+                            <Double fx:value="0.0" />
+                            <Double fx:value="-60.0" />
+                          </points>
+                        </Polygon>
+                        <Polygon fx:id="leftPoly" fill="DODGERBLUE" layoutX="150.0" layoutY="144.0" points="50.0, 93.0, 50.0, 10.5, -86.5, 50.5" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="rightPoly" fill="DODGERBLUE" layoutX="276.0" layoutY="144.0" points="50.0, 93.0, 50.0, 10.5, 161.5, 47.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="reversePoly" fill="DODGERBLUE" layoutX="267.0" layoutY="206.0" points="-50.0, 40.0, 50.0, 40.0, -1.5, 132.0" stroke="BLACK" strokeType="INSIDE" />
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
