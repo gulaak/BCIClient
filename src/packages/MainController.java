@@ -44,6 +44,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -96,7 +98,13 @@ public class MainController implements Initializable, Serializable {
 	 private Label D3Status;
 	 
 	 @FXML
-	 private Label sceneSliderStatus;
+	 private Label sceneSliderStatusOne;
+	 
+	 @FXML
+	 private Label sceneSliderStatusTwo;
+	 
+	 @FXML
+	 private Label sceneSliderStatusThree;
 
 	 @FXML
 	 private Slider SliderD3;
@@ -108,7 +116,13 @@ public class MainController implements Initializable, Serializable {
 	 private Slider SliderD2;
 	 
 	 @FXML
-	 public Slider sceneSlider;
+	 public Slider sceneSliderOne;
+	 
+	 @FXML
+	 public Slider sceneSliderTwo;
+	 
+	 @FXML
+	 public Slider sceneSliderThree;
 	 
 	 
 
@@ -121,17 +135,12 @@ public class MainController implements Initializable, Serializable {
 	 @FXML
 	 private ToggleGroup TG1;
 	 
-	 @FXML
-	 public ToggleGroup TG2;
+	
 	 
 	 @FXML
 	 private RadioButton wheelChair;
 	 
-	 @FXML
-	 private RadioButton on;
-
-	 @FXML
-	 private RadioButton off;
+	
 	 
 	 @FXML
 	 private ImageView deviceOneImg;
@@ -202,7 +211,6 @@ public class MainController implements Initializable, Serializable {
 		x.setScaleX(1.00);
 		sceneListView.setItems(FXCollections.observableArrayList("Pull" , "Push" , "Left"));
 		sceneListView.getSelectionModel().getSelectedItem();
-		TG1.selectToggle(off);
 		this.lightOn = new Image("/LightOn.PNG"); //grab image for GUI
 		this.lightOff = new Image("/LightOff.PNG"); // grab image for GUI
 		this.recOff = new Image("/RecOff.PNG");
@@ -214,32 +222,32 @@ public class MainController implements Initializable, Serializable {
 		this.recImage.setImage(this.recOff);
 		this.getHome().setSelected(true);
 		
-		this.sceneSlider.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
+		this.sceneSliderOne.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-				int sliderValue = (int)(Math.floor(sceneSlider.getValue()));
-				sceneSliderStatus.setText(Integer.toString(sliderValue));
+				int sliderValue = (int)(Math.floor(sceneSliderOne.getValue()));
+				sceneSliderStatusOne.setText(Integer.toString(sliderValue));
 			}
 		});
-		commandSettings = new Scenes(TG2, (int)sceneSlider.getValue());
+		
+		this.sceneSliderTwo.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				int sliderValue = (int)(Math.floor(sceneSliderTwo.getValue()));
+				sceneSliderStatusTwo.setText(Integer.toString(sliderValue));
+			}
+		});
+		
+		this.sceneSliderThree.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				int sliderValue = (int)(Math.floor(sceneSliderThree.getValue()));
+				sceneSliderStatusThree.setText(Integer.toString(sliderValue));
+			}
+		});
+		commandSettings = new Scenes();
 	
 		
 		
 		
-//		this.SliderD1.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
-//			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-//				sliderOneChanged();
-//			}
-//		});
-//		this.SliderD2.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 2
-//			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-//				sliderTwoChanged();
-//			}
-//		});
-//		this.SliderD3.valueProperty().addListener(new ChangeListener<Number>() {    // change listener for device 3
-//			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-//				sliderThreeChanged();
-//			}
-//		});
+
 		
 		
 		
@@ -485,13 +493,37 @@ public class MainController implements Initializable, Serializable {
 	 }
 	 
 	 @FXML
-	 public void saveScene()
+	 public void saveScene() throws Exception
 		{
+		 	if(controllerInterface.mc.sceneListView.getSelectionModel().getSelectedIndex() < 0) {
+		 		Alert alert = new Alert(AlertType.ERROR);
+		 		alert.setTitle("Error");
+		 		alert.setHeaderText("Error");
+		 		alert.setContentText("Please select a target command");
+
+		 		alert.showAndWait();
+		 		return;
+		 	}
+		 
+		 	switch(controllerInterface.mc.sceneListView.getSelectionModel().getSelectedItem()) { // save state based on current settings
+		 		case "Push":
+		 			this.commandSettings.setCommandOne(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
+		 			break;
+		 		case "Pull":
+		 			this.commandSettings.setCommandTwo(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
+		 			break;
+		 		case "Left":
+		 			this.commandSettings.setCommandThree(8, (int)controllerInterface.mc.sceneSliderThree.getValue());
+		 			break;
+		 		default:
+		 			throw new Exception();
+		 	}
+		 	
 			try {
 				FileOutputStream settings = new FileOutputStream(settingsFileName);
 				ObjectOutputStream save = new ObjectOutputStream(settings); 
 				
-				save.writeObject(commandSettings);
+				save.writeObject(this.commandSettings);
 				System.out.println("good");
 				
 				save.close();
