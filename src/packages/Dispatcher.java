@@ -12,6 +12,21 @@ public class Dispatcher {
 	
 	public static boolean selectionNetwork;
 	public static boolean selectionSuite;
+	public enum States {
+		motorForward (20),
+		motorLeft (10),
+		motorRight (30),
+		motorReverse(40);
+		
+		private int bit;
+		States(int bitnumber){
+			bit = bitnumber;
+		}
+		int ToInt() {
+			return bit;
+		}
+	}
+	
 	
 	
 	public static void call(Pointer eState) throws ClientProtocolException, IOException {
@@ -30,20 +45,20 @@ public class Dispatcher {
 		if(selectionNetwork) {
 			
 			//Check for pushing action at a power over 0.5 and timeout false
-			if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PUSH.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+			if ((EmoState.INSTANCE.ES_ExpressivIsLeftWink(eState)==1) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
 				ZWave.post(7, 255);
 			}
-			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PULL.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+			else if((EmoState.INSTANCE.ES_ExpressivGetClenchExtent(eState)  > 0.5) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
 				ZWave.post(8, 255);
 			}
-			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_LEFT.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+			else if((EmoState.INSTANCE.ES_ExpressivIsLookingLeft(eState)==1) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
 				ZWave.post(9, 255);
 			}
 			
-			else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==EE_CognitivAction_t.COG_RIGHT.ToInt() && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
+			else if(EmoState.INSTANCE.ES_ExpressivIsLookingRight(eState)==1 && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
 				LightTimer.initTimer();
 				ZWave.toggleRec(3);
 			
@@ -53,22 +68,22 @@ public class Dispatcher {
 		}
 		else {
 			
-			if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PUSH.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+			if ((EmoState.INSTANCE.ES_ExpressivIsLeftWink(eState) == 1) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10,20);
+				ZWave.post(10,States.motorForward.ToInt());
 			}
-			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PULL.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+			else if((EmoState.INSTANCE.ES_ExpressivGetClenchExtent(eState)  > 0.5) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10, 40);
+				ZWave.post(10, States.motorReverse.ToInt());
 			}
-			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_LEFT.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
+			else if(EmoState.INSTANCE.ES_ExpressivIsLookingLeft(eState)==1 && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10,10);
+				ZWave.post(10,States.motorLeft.ToInt());
 			}
 			
-			else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==EE_CognitivAction_t.COG_RIGHT.ToInt() && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
+			else if(EmoState.INSTANCE.ES_ExpressivIsLookingRight(eState)==1 && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
 				LightTimer.initTimer();
-				ZWave.post(10, 30);
+				ZWave.post(10, States.motorRight.ToInt());
 			
 			}
 			
