@@ -2,9 +2,11 @@ package packages;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
@@ -242,8 +244,31 @@ public class MainController implements Initializable, Serializable {
 				sceneSliderStatusThree.setText(Integer.toString(sliderValue));
 			}
 		});
-		commandSettings = new Scenes();
-	
+		
+		FileInputStream file;
+		try {
+			file = new FileInputStream(settingsFileName);
+			 ObjectInputStream in = new ObjectInputStream(file); 
+			 commandSettings = (Scenes)in.readObject(); 
+		     in.close(); 
+		     file.close();
+		     System.out.println(commandSettings.getCommandOne().values());
+		     System.out.println(commandSettings.getCommandTwo().values());
+		     System.out.println(commandSettings.getCommandThree().values());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			commandSettings = new Scenes();
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			commandSettings = new Scenes();
+			e.printStackTrace();
+		} 
+       
+          
+        // Method for deserialization of object 
+       
+		
 		
 		
 		
@@ -508,12 +533,18 @@ public class MainController implements Initializable, Serializable {
 		 	switch(controllerInterface.mc.sceneListView.getSelectionModel().getSelectedItem()) { // save state based on current settings
 		 		case "Push":
 		 			this.commandSettings.setCommandOne(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
+		 			this.commandSettings.setCommandOne(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
+		 			this.commandSettings.setCommandOne(9, (int)controllerInterface.mc.sceneSliderThree.getValue());
 		 			break;
 		 		case "Pull":
+		 			this.commandSettings.setCommandTwo(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
 		 			this.commandSettings.setCommandTwo(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
+		 			this.commandSettings.setCommandTwo(9, (int)controllerInterface.mc.sceneSliderThree.getValue());
 		 			break;
 		 		case "Left":
-		 			this.commandSettings.setCommandThree(8, (int)controllerInterface.mc.sceneSliderThree.getValue());
+		 			this.commandSettings.setCommandThree(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
+		 			this.commandSettings.setCommandThree(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
+		 			this.commandSettings.setCommandThree(9, (int)controllerInterface.mc.sceneSliderThree.getValue());
 		 			break;
 		 		default:
 		 			throw new Exception();
@@ -524,7 +555,11 @@ public class MainController implements Initializable, Serializable {
 				ObjectOutputStream save = new ObjectOutputStream(settings); 
 				
 				save.writeObject(this.commandSettings);
-				System.out.println("good");
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+		 		alert.setTitle("Success");
+		 		alert.setHeaderText("Success");
+		 		alert.setContentText("Scene Settings Saved");
+		 		alert.showAndWait();
 				
 				save.close();
 				settings.close();
