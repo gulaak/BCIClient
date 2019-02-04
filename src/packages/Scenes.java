@@ -14,8 +14,6 @@ public class Scenes implements Serializable {
 	
 	private static final long serialVersionUID = 4586;
 	
-	private transient ToggleGroup buttonStatus;
-	private int sliderStatus;
 	private Map<Integer,Integer> commandOne;
 	private Map<Integer,Integer> commandTwo;
 	private Map<Integer,Integer> commandThree;

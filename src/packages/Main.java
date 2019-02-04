@@ -52,6 +52,7 @@ public class Main extends Application
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("Layout.fxml")); 
 		Pane pane = loader.load();
 		
+		
 		Scene scene = new Scene(pane);
 		
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -67,6 +68,7 @@ public class Main extends Application
 
 	   
 		primaryStage.setScene(scene);
+		primaryStage.setTitle("BCI Client");
 		primaryStage.setResizable(true);
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(e -> shutdown());
