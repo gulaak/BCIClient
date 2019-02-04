@@ -29,7 +29,7 @@
         <tabs>
           <Tab text="Home">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#sliderTwoChanged" onTouchReleased="#slider1Move" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ChoiceBox fx:id="choiceBox" layoutX="483.0" layoutY="9.0" prefHeight="25.0" prefWidth="87.0" />
                         <Label fx:id="D1Status" layoutX="72.0" layoutY="87.0" text="D1Status" />
@@ -57,14 +57,14 @@
                         <ImageView fx:id="deviceThreeImg" fitHeight="45.0" fitWidth="62.0" layoutX="65.0" layoutY="203.0" onMouseClicked="#DeviceThree" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="recImage" fitHeight="45.0" fitWidth="62.0" layoutX="222.0" layoutY="203.0" onMouseClicked="#recClick" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="recStatus" layoutX="234.0" layoutY="260.0" text="RecStatus" />
-                        <Slider fx:id="SliderD2" blockIncrement="5.0" layoutX="207.0" layoutY="7.0" onMouseClicked="#sliderTwoChanged" />
                         <Label layoutX="464.0" layoutY="317.0" text="Target Suite" />
                         <RadioButton fx:id="cognitive" layoutX="434.0" layoutY="334.0" mnemonicParsing="false" text="Cognitive">
                            <toggleGroup>
                               <ToggleGroup fx:id="TG3" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="expressive" layoutX="434.0" layoutY="351.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="Expressive" />
+                        <RadioButton fx:id="expressive" layoutX="434.0" layoutY="351.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="Expressive" toggleGroup="$TG3" />
+                        <Slider fx:id="SliderD2" layoutX="207.0" layoutY="7.0" onMouseClicked="#sliderTwoChanged" />
                      </children></AnchorPane>
             </content>
           </Tab>

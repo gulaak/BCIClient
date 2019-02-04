@@ -213,16 +213,17 @@ public class MainController implements Initializable, Serializable {
 		x.setScaleX(1.00);
 		sceneListView.setItems(FXCollections.observableArrayList("Pull" , "Push" , "Left"));
 		sceneListView.getSelectionModel().getSelectedItem();
-		this.lightOn = new Image("/LightOn.PNG"); //grab image for GUI
-		this.lightOff = new Image("/LightOff.PNG"); // grab image for GUI
+		this.setLightOn(new Image("/LightOn.PNG")); //grab image for GUI
+		this.setLightOff(new Image("/LightOff.PNG")); // grab image for GUI
 		this.recOff = new Image("/RecOff.PNG");
 		this.recOn = new Image("/RecOn.PNG");
 		choiceBox.getItems().add("hello"); // add profile boxes
-		this.deviceOneImg.setImage(this.lightOff); // set default image
-		this.deviceTwoImg.setImage(this.lightOff);
-		this.deviceThreeImg.setImage(this.lightOff);
-		this.recImage.setImage(this.recOff);
+		this.getDeviceOneImg().setImage(this.getLightOff()); // set default image
+		this.getDeviceTwoImg().setImage(this.getLightOff());
+		this.getDeviceThreeImg().setImage(this.getLightOff());
+		this.getRecImage().setImage(this.recOff);
 		this.getHome().setSelected(true);
+		this.getCognitive().setSelected(true);
 		
 		this.sceneSliderOne.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
@@ -252,9 +253,6 @@ public class MainController implements Initializable, Serializable {
 			 commandSettings = (Scenes)in.readObject(); 
 		     in.close(); 
 		     file.close();
-		     System.out.println(commandSettings.getCommandOne().values());
-		     System.out.println(commandSettings.getCommandTwo().values());
-		     System.out.println(commandSettings.getCommandThree().values());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			commandSettings = new Scenes();
@@ -264,24 +262,6 @@ public class MainController implements Initializable, Serializable {
 			commandSettings = new Scenes();
 			e.printStackTrace();
 		} 
-       
-          
-        // Method for deserialization of object 
-       
-		
-		
-		
-		
-
-		
-		
-		
-	
-//		XYChart.Series data = new XYChart.Series();
-//		data.getData().add(new XYChart.Data("10",100));
-//		data.getData().add(new XYChart.Data("100",200));
-		
-
 		
 	}
 	
@@ -293,7 +273,6 @@ public class MainController implements Initializable, Serializable {
 
 	@FXML
 	void DeviceOne(MouseEvent event) throws ClientProtocolException, IOException {
-
 
 		
 
@@ -309,7 +288,7 @@ public class MainController implements Initializable, Serializable {
 						// TODO Auto-generated method stub
 
 						
-						ZWave.post(7, 255);
+						ZWave.post(7, 99);
 						return null;
 						
 					}
@@ -321,12 +300,14 @@ public class MainController implements Initializable, Serializable {
 					
 					@Override
 					protected void succeeded() {
-						if(deviceOneImg.getImage()==lightOff) {
-							deviceOneImg.setImage(lightOn);
+						if(getDeviceOneImg().getImage()==getLightOff()) {
+							getDeviceOneImg().setImage(getLightOn());
+							getD1Status().setText(Integer.toString(99));
 						}
-						else
-							deviceOneImg.setImage(lightOff);
-
+						else {
+							getDeviceOneImg().setImage(getLightOff());
+							getD1Status().setText(Integer.toString(0));
+						}
 
 					
 					}
@@ -339,11 +320,7 @@ public class MainController implements Initializable, Serializable {
 
 		myservice.start();
 
-	}
-
-			
-
-	
+	}	
     @FXML
     void keyPress(KeyEvent event) throws ClientProtocolException, IOException {
     	System.out.println("Trigger" + event.getCode());
@@ -377,25 +354,22 @@ public class MainController implements Initializable, Serializable {
 	@FXML
 	void sliderOneChanged(MouseEvent event){
 		int brightness = (int)(Math.floor(SliderD1.getValue()));
-		D1Status.setText(Integer.toString(brightness));
+		getD1Status().setText(Integer.toString(brightness));
 		DeviceOne(brightness);
 	}
 	
-	
-	
 	@FXML
-    void sliderTwoChanged(MouseEvent event) {
-		
-    	int brightness = (int)(Math.floor(SliderD2.getValue()));
-		D2Status.setText(Integer.toString(brightness));
+	void sliderTwoChanged(MouseEvent event) {
+		int brightness = (int)(Math.floor(SliderD2.getValue()));
+		getD2Status().setText(Integer.toString(brightness));
 		DeviceTwo(brightness);
-
-    }
+	}
+	
 	
 	@FXML
     void sliderThreeChanged(MouseEvent event) {
     	int brightness = (int)(Math.floor(SliderD3.getValue()));
-		D3Status.setText(Integer.toString(brightness));
+		getD3Status().setText(Integer.toString(brightness));
 		DeviceThree(brightness);
 
     }
@@ -403,13 +377,7 @@ public class MainController implements Initializable, Serializable {
 
 	@FXML
 	void DeviceTwo(MouseEvent event) {
-		
-		
-		
-		
 
-
-		
 		Service<Void> myservice = new Service<Void>() {
 
 			@Override
@@ -421,7 +389,7 @@ public class MainController implements Initializable, Serializable {
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
 
-						ZWave.post(8, 255);
+						ZWave.post(8, 99);
 						return null;
 						
 					}
@@ -433,21 +401,19 @@ public class MainController implements Initializable, Serializable {
 					
 					@Override
 					protected void succeeded() {
-						if(deviceTwoImg.getImage()==lightOff) {
-							deviceTwoImg.setImage(lightOn);
+						if(getDeviceTwoImg().getImage()==getLightOff()) {
+							getDeviceTwoImg().setImage(getLightOn());
+							getD2Status().setText(Integer.toString(99));
 						}
-						else
-							deviceTwoImg.setImage(lightOff);
+						else {
+							getDeviceTwoImg().setImage(getLightOff());
+							getD1Status().setText(Integer.toString(0));
+						}
 
 					}
 				};
-			};
-
-			
-			
+			};	
 		};
-		
-
 		myservice.start();
 	}
 	
@@ -455,43 +421,34 @@ public class MainController implements Initializable, Serializable {
 	void DeviceThree(MouseEvent event) {
 		
 		Service<Void> myservice = new Service<Void>() {
-
 			@Override
 			protected Task<Void> createTask() {
 				// TODO Auto-generated method stub
 				return new Task<Void>() {
-
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-						ZWave.post(9, 255);
+						ZWave.post(9, 99);
 						return null;
-						
 					}
-					
 					@Override
 					protected void failed() {
 						System.out.println("Failed thread");
 					}
-					
 					@Override
 					protected void succeeded() {
-						if(deviceThreeImg.getImage()==lightOff) {
-							deviceThreeImg.setImage(lightOn);
+						if(getDeviceThreeImg().getImage()==getLightOff()) {
+							getDeviceThreeImg().setImage(getLightOn());
+							getD3Status().setText(Integer.toString(99));
 						}
-						else
-							deviceThreeImg.setImage(lightOff);
-
+						else {
+							getDeviceThreeImg().setImage(getLightOff());
+							getD3Status().setText(Integer.toString(0));
+						}
 					}
 				};
 			};
-
-
-			
-			
 		};
-		
-
 		myservice.start();
 	}
 
@@ -602,13 +559,16 @@ public class MainController implements Initializable, Serializable {
 						
 						@Override
 						protected void succeeded() {
-							 if(recImage.getImage() == recOff)
+							 if(getRecImage().getImage() == recOff)
 							 {
-								 recImage.setImage(recOn);
+								 getRecImage().setImage(recOn);
+								 recStatus.setText("On");
 								
 							 }
-							 else
-								 recImage.setImage(recOff);
+							 else {
+								 getRecImage().setImage(recOff);
+								 recStatus.setText("Off");
+							 }
 					}
 				};
 
@@ -648,10 +608,13 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected void succeeded() {
 							if(brightness > 0) {
-								deviceOneImg.setImage(lightOn);
+								getDeviceOneImg().setImage(getLightOn());
+								getD1Status().setText(Integer.toString(brightness));
 							}
-							else
-								deviceOneImg.setImage(lightOff);
+							else {
+								getDeviceOneImg().setImage(getLightOff());
+								getD1Status().setText(Integer.toString(brightness));
+							}
 						}
 						
 					};
@@ -672,10 +635,6 @@ public class MainController implements Initializable, Serializable {
 		
 		
 		void DeviceTwo(int brightness)  {
-			
-			
-			
-			
 			
 			Service<Void> myservice = new Service<Void>() {
 
@@ -701,10 +660,13 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected void succeeded() {
 							if(brightness > 0) {
-								deviceTwoImg.setImage(lightOn);
+								getDeviceTwoImg().setImage(getLightOn());
+								getD2Status().setText(Integer.toString(brightness));
 							}
-							else
-								deviceTwoImg.setImage(lightOff);
+							else {
+								getDeviceTwoImg().setImage(getLightOff());
+								getD2Status().setText(Integer.toString(brightness));
+							}
 						}
 						
 					};
@@ -731,7 +693,6 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							
 							ZWave.sliderPost(9, brightness);
 							return null;
 							
@@ -745,16 +706,17 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected void succeeded() {
 							if(brightness > 0) {
-								deviceThreeImg.setImage(lightOn);
+								getDeviceThreeImg().setImage(getLightOn());
+								getD3Status().setText(Integer.toString(brightness));
 							}
-							else
-								deviceThreeImg.setImage(lightOff);
+							else {
+								getDeviceThreeImg().setImage(getLightOff());
+								getD3Status().setText(Integer.toString(brightness));
+							}
 						}
 						
 					};
 				}
-
-				
 				
 			};
 			
@@ -808,6 +770,78 @@ public class MainController implements Initializable, Serializable {
 
 		public void setCognitive(RadioButton cognitive) {
 			this.cognitive = cognitive;
+		}
+
+		public ImageView getRecImage() {
+			return recImage;
+		}
+
+		public void setRecImage(ImageView recImage) {
+			this.recImage = recImage;
+		}
+
+		public Label getD1Status() {
+			return D1Status;
+		}
+
+		public void setD1Status(Label d1Status) {
+			D1Status = d1Status;
+		}
+
+		public Label getD2Status() {
+			return D2Status;
+		}
+
+		public void setD2Status(Label d2Status) {
+			D2Status = d2Status;
+		}
+
+		public Label getD3Status() {
+			return D3Status;
+		}
+
+		public void setD3Status(Label d3Status) {
+			D3Status = d3Status;
+		}
+
+		public ImageView getDeviceOneImg() {
+			return deviceOneImg;
+		}
+
+		public void setDeviceOneImg(ImageView deviceOneImg) {
+			this.deviceOneImg = deviceOneImg;
+		}
+
+		public Image getLightOn() {
+			return lightOn;
+		}
+
+		public void setLightOn(Image lightOn) {
+			this.lightOn = lightOn;
+		}
+
+		public Image getLightOff() {
+			return lightOff;
+		}
+
+		public void setLightOff(Image lightOff) {
+			this.lightOff = lightOff;
+		}
+
+		public ImageView getDeviceTwoImg() {
+			return deviceTwoImg;
+		}
+
+		public void setDeviceTwoImg(ImageView deviceTwoImg) {
+			this.deviceTwoImg = deviceTwoImg;
+		}
+
+		public ImageView getDeviceThreeImg() {
+			return deviceThreeImg;
+		}
+
+		public void setDeviceThreeImg(ImageView deviceThreeImg) {
+			this.deviceThreeImg = deviceThreeImg;
 		}
 		
 		
