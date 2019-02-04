@@ -224,6 +224,9 @@ public class MainController implements Initializable, Serializable {
 		this.getRecImage().setImage(this.recOff);
 		this.getHome().setSelected(true);
 		this.getCognitive().setSelected(true);
+		this.MainTabs.setStyle("-fx-background-color: #ff00ff");
+		this.SliderD1.setStyle("-fx-color: blue");
+		
 		
 		this.sceneSliderOne.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
