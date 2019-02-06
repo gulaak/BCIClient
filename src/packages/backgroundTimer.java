@@ -1,13 +1,21 @@
 package packages;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class backgroundTimer extends TimerTask {
 	private boolean statusFlag;
 	
+	Timer timer;
+	TimerTask task;
+	
 	public backgroundTimer() {
 		this.setStatus(false);
+		
+		
 	}
+	
+	
 	
 	public boolean getStatus() {
 		return this.statusFlag;
@@ -17,9 +25,9 @@ public class backgroundTimer extends TimerTask {
 		this.statusFlag = status;
 	}
 	
-	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		
 		this.statusFlag = !this.statusFlag;
 		
 		

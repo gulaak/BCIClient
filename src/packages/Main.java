@@ -64,6 +64,10 @@ public class Main extends Application
 		DataProcessing thread = new DataProcessing();
 		thread.setDaemon(true);
 		thread.start();
+		
+		backgroundThread worker = new backgroundThread();
+		worker.setDaemon(true);
+		worker.start();
 
 
 	   

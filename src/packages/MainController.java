@@ -215,17 +215,20 @@ public class MainController implements Initializable, Serializable {
 		sceneListView.getSelectionModel().getSelectedItem();
 		this.setLightOn(new Image("/LightOn.PNG")); //grab image for GUI
 		this.setLightOff(new Image("/LightOff.PNG")); // grab image for GUI
-		this.recOff = new Image("/RecOff.PNG");
-		this.recOn = new Image("/RecOn.PNG");
+		this.setRecOff(new Image("/RecOff.PNG"));
+		this.setRecOn(new Image("/RecOn.PNG"));
 		choiceBox.getItems().add("hello"); // add profile boxes
 		this.getDeviceOneImg().setImage(this.getLightOff()); // set default image
 		this.getDeviceTwoImg().setImage(this.getLightOff());
 		this.getDeviceThreeImg().setImage(this.getLightOff());
-		this.getRecImage().setImage(this.recOff);
+		this.getRecImage().setImage(this.getRecOff());
 		this.getHome().setSelected(true);
 		this.getCognitive().setSelected(true);
-		this.MainTabs.setStyle("-fx-background-color: #ff00ff");
-		this.SliderD1.setStyle("-fx-color: blue");
+		
+		this.D1Status.setText("0");
+		this.D2Status.setText("0");
+		this.D3Status.setText("0");
+		this.recStatus.setText("Off");
 		
 		
 		this.sceneSliderOne.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
@@ -254,6 +257,7 @@ public class MainController implements Initializable, Serializable {
 			file = new FileInputStream(settingsFileName);
 			 ObjectInputStream in = new ObjectInputStream(file); 
 			 commandSettings = (Scenes)in.readObject(); 
+			 ZWave.commandSettings = this.commandSettings;
 		     in.close(); 
 		     file.close();
 		} catch (IOException e) {
@@ -263,8 +267,14 @@ public class MainController implements Initializable, Serializable {
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			commandSettings = new Scenes();
+			ZWave.commandSettings = new Scenes();
 			e.printStackTrace();
 		} 
+		ZWave.commandSettings.setD1(7);
+		ZWave.commandSettings.setD2(8);
+		ZWave.commandSettings.setD3(9);
+		ZWave.commandSettings.setD4(3);
+		ZWave.commandSettings.setWheelChair(13);
 		
 	}
 	
@@ -291,7 +301,7 @@ public class MainController implements Initializable, Serializable {
 						// TODO Auto-generated method stub
 
 						
-						ZWave.post(7, 99);
+						ZWave.post(ZWave.commandSettings.getD1(), 99);
 						return null;
 						
 					}
@@ -303,14 +313,14 @@ public class MainController implements Initializable, Serializable {
 					
 					@Override
 					protected void succeeded() {
-						if(getDeviceOneImg().getImage()==getLightOff()) {
-							getDeviceOneImg().setImage(getLightOn());
-							getD1Status().setText(Integer.toString(99));
-						}
-						else {
-							getDeviceOneImg().setImage(getLightOff());
-							getD1Status().setText(Integer.toString(0));
-						}
+//						if(getDeviceOneImg().getImage()==getLightOff()) {
+//							getDeviceOneImg().setImage(getLightOn());
+//							getD1Status().setText(Integer.toString(99));
+//						}
+//						else {
+//							getDeviceOneImg().setImage(getLightOff());
+//							getD1Status().setText(Integer.toString(0));
+//						}
 
 					
 					}
@@ -392,7 +402,7 @@ public class MainController implements Initializable, Serializable {
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
 
-						ZWave.post(8, 99);
+						ZWave.post(ZWave.commandSettings.getD2(), 99);
 						return null;
 						
 					}
@@ -404,14 +414,14 @@ public class MainController implements Initializable, Serializable {
 					
 					@Override
 					protected void succeeded() {
-						if(getDeviceTwoImg().getImage()==getLightOff()) {
-							getDeviceTwoImg().setImage(getLightOn());
-							getD2Status().setText(Integer.toString(99));
-						}
-						else {
-							getDeviceTwoImg().setImage(getLightOff());
-							getD1Status().setText(Integer.toString(0));
-						}
+//						if(getDeviceTwoImg().getImage()==getLightOff()) {
+//							getDeviceTwoImg().setImage(getLightOn());
+//							getD2Status().setText(Integer.toString(99));
+//						}
+//						else {
+//							getDeviceTwoImg().setImage(getLightOff());
+//							getD1Status().setText(Integer.toString(0));
+//						}
 
 					}
 				};
@@ -431,7 +441,7 @@ public class MainController implements Initializable, Serializable {
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-						ZWave.post(9, 99);
+						ZWave.post(ZWave.commandSettings.getD3(), 99);
 						return null;
 					}
 					@Override
@@ -440,14 +450,14 @@ public class MainController implements Initializable, Serializable {
 					}
 					@Override
 					protected void succeeded() {
-						if(getDeviceThreeImg().getImage()==getLightOff()) {
-							getDeviceThreeImg().setImage(getLightOn());
-							getD3Status().setText(Integer.toString(99));
-						}
-						else {
-							getDeviceThreeImg().setImage(getLightOff());
-							getD3Status().setText(Integer.toString(0));
-						}
+//						if(getDeviceThreeImg().getImage()==getLightOff()) {
+//							getDeviceThreeImg().setImage(getLightOn());
+//							getD3Status().setText(Integer.toString(99));
+//						}
+//						else {
+//							getDeviceThreeImg().setImage(getLightOff());
+//							getD3Status().setText(Integer.toString(0));
+//						}
 					}
 				};
 			};
@@ -550,7 +560,7 @@ public class MainController implements Initializable, Serializable {
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
 							
-							ZWave.toggleRec(3);
+							ZWave.toggleRec(ZWave.commandSettings.getD4());
 							return null;
 							
 						}
@@ -562,16 +572,16 @@ public class MainController implements Initializable, Serializable {
 						
 						@Override
 						protected void succeeded() {
-							 if(getRecImage().getImage() == recOff)
-							 {
-								 getRecImage().setImage(recOn);
-								 recStatus.setText("On");
-								
-							 }
-							 else {
-								 getRecImage().setImage(recOff);
-								 recStatus.setText("Off");
-							 }
+//							 if(getRecImage().getImage() == getRecOff())
+//							 {
+//								 getRecImage().setImage(getRecOn());
+//								 getRecStatus().setText("On");
+//								
+//							 }
+//							 else {
+//								 getRecImage().setImage(getRecOff());
+//								 getRecStatus().setText("Off");
+//							 }
 					}
 				};
 
@@ -598,7 +608,7 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.sliderPost(7, brightness);
+							ZWave.sliderPost(ZWave.commandSettings.getD1(), brightness);
 							return null;
 							
 						}
@@ -610,14 +620,14 @@ public class MainController implements Initializable, Serializable {
 						
 						@Override
 						protected void succeeded() {
-							if(brightness > 0) {
-								getDeviceOneImg().setImage(getLightOn());
-								getD1Status().setText(Integer.toString(brightness));
-							}
-							else {
-								getDeviceOneImg().setImage(getLightOff());
-								getD1Status().setText(Integer.toString(brightness));
-							}
+//							if(brightness > 0) {
+//								getDeviceOneImg().setImage(getLightOn());
+//								getD1Status().setText(Integer.toString(brightness));
+//							}
+//							else {
+//								getDeviceOneImg().setImage(getLightOff());
+//								getD1Status().setText(Integer.toString(brightness));
+//							}
 						}
 						
 					};
@@ -650,7 +660,7 @@ public class MainController implements Initializable, Serializable {
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
 							
-							ZWave.sliderPost(8, brightness);
+							ZWave.sliderPost(ZWave.commandSettings.getD1(), brightness);
 							return null;
 							
 						}
@@ -662,14 +672,14 @@ public class MainController implements Initializable, Serializable {
 						
 						@Override
 						protected void succeeded() {
-							if(brightness > 0) {
-								getDeviceTwoImg().setImage(getLightOn());
-								getD2Status().setText(Integer.toString(brightness));
-							}
-							else {
-								getDeviceTwoImg().setImage(getLightOff());
-								getD2Status().setText(Integer.toString(brightness));
-							}
+//							if(brightness > 0) {
+//								getDeviceTwoImg().setImage(getLightOn());
+//								getD2Status().setText(Integer.toString(brightness));
+//							}
+//							else {
+//								getDeviceTwoImg().setImage(getLightOff());
+//								getD2Status().setText(Integer.toString(brightness));
+//							}
 						}
 						
 					};
@@ -696,7 +706,7 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.sliderPost(9, brightness);
+							ZWave.sliderPost(ZWave.commandSettings.getD3(), brightness);
 							return null;
 							
 						}
@@ -708,14 +718,14 @@ public class MainController implements Initializable, Serializable {
 						
 						@Override
 						protected void succeeded() {
-							if(brightness > 0) {
-								getDeviceThreeImg().setImage(getLightOn());
-								getD3Status().setText(Integer.toString(brightness));
-							}
-							else {
-								getDeviceThreeImg().setImage(getLightOff());
-								getD3Status().setText(Integer.toString(brightness));
-							}
+//							if(brightness > 0) {
+//								getDeviceThreeImg().setImage(getLightOn());
+//								getD3Status().setText(Integer.toString(brightness));
+//							}
+//							else {
+//								getDeviceThreeImg().setImage(getLightOff());
+//								getD3Status().setText(Integer.toString(brightness));
+//							}
 						}
 						
 					};
@@ -845,6 +855,76 @@ public class MainController implements Initializable, Serializable {
 
 		public void setDeviceThreeImg(ImageView deviceThreeImg) {
 			this.deviceThreeImg = deviceThreeImg;
+		}
+
+		public Label getRecStatus() {
+			return recStatus;
+		}
+
+		public void setRecStatus(Label recStatus) {
+			this.recStatus = recStatus;
+		}
+
+		public Image getRecOn() {
+			return recOn;
+		}
+
+		public void setRecOn(Image recOn) {
+			this.recOn = recOn;
+		}
+
+		public Image getRecOff() {
+			return recOff;
+		}
+
+		public void setRecOff(Image recOff) {
+			this.recOff = recOff;
+		}
+		
+		
+		public Label getDeviceStatus(int device) {
+			switch(device) {
+				case 7:
+					return this.D1Status;
+					
+				case 8:
+					return this.D2Status;
+					
+				case 9:
+					return this.D3Status;
+					
+				default:
+					return null;
+			}
+		}
+		
+		public ImageView getDeviceImage(int device) {
+			switch(device) {
+				case 7:
+					return this.deviceOneImg;
+					
+				case 8:
+					return this.deviceTwoImg;
+					
+				case 9:
+					return this.deviceThreeImg;
+					
+				default:
+					return null;
+			}
+		}
+		
+		public Slider getDeviceSlider(int device) {
+			switch(device) {
+				case 7:
+					return this.SliderD1;
+				case 8:
+					return this.SliderD2;
+				case 9:
+					return this.SliderD3;
+				default:
+					return null;
+			}
 		}
 		
 		

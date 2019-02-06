@@ -17,6 +17,11 @@ public class Scenes implements Serializable {
 	private Map<Integer,Integer> commandOne;
 	private Map<Integer,Integer> commandTwo;
 	private Map<Integer,Integer> commandThree;
+	private int d1;
+	private int d2;
+	private int d3;
+	private int d4;
+	private int wheelChair;
 	
 	
 	
@@ -48,6 +53,46 @@ public class Scenes implements Serializable {
 	
 	public void setCommandThree(int key, int value) {
 		this.commandThree.put(key, value);
+	}
+
+	public int getD1() {
+		return d1;
+	}
+
+	public void setD1(int d1) {
+		this.d1 = d1;
+	}
+
+	public int getD2() {
+		return d2;
+	}
+
+	public void setD2(int d2) {
+		this.d2 = d2;
+	}
+
+	public int getD3() {
+		return d3;
+	}
+
+	public void setD3(int d3) {
+		this.d3 = d3;
+	}
+
+	public int getD4() {
+		return d4;
+	}
+
+	public void setD4(int d4) {
+		this.d4 = d4;
+	}
+
+	public int getWheelChair() {
+		return wheelChair;
+	}
+
+	public void setWheelChair(int wheelChair) {
+		this.wheelChair = wheelChair;
 	}
 	
 	
