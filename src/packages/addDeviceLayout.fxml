@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="183.0" prefWidth="368.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="183.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packages.AddDeviceController">
    <children>
-      <TextField layoutX="140.0" layoutY="39.0" />
-      <Button layoutX="159.0" layoutY="138.0" mnemonicParsing="false" text="Save" />
-      <TextField layoutX="140.0" layoutY="90.0" />
+      <TextField fx:id="nameEntry" layoutX="140.0" layoutY="39.0" promptText="Name your device..." />
+      <Button fx:id="saveDevice" layoutX="159.0" layoutY="138.0" mnemonicParsing="false" onAction="#addDevice" text="Save" />
+      <TextField fx:id="idEntry" layoutX="140.0" layoutY="90.0" promptText="Enter a numerical ID..." />
       <Text layoutX="42.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Device Name:" />
       <Text layoutX="54.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Device ID:" />
+      <Button fx:id="showDevice" layoutX="241.0" layoutY="138.0" mnemonicParsing="false" onAction="#showDevices" text="Show Devices" />
    </children>
 </AnchorPane>

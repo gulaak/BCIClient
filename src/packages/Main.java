@@ -52,7 +52,7 @@ public class Main extends Application
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("Layout.fxml")); 
 		Pane pane = loader.load();
 		
-		
+		pane.autosize();
 		Scene scene = new Scene(pane);
 		
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());

@@ -11,6 +11,10 @@ public class controllerInterface {
 		return mc.getTabText();
 	}
 	
+	public void beep()
+	{
+		
+	}
 //	public void plot(String x, D) {
 //		
 //	}

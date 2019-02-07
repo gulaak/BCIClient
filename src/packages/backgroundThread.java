@@ -13,25 +13,24 @@ public class backgroundThread extends Thread {
 
 	public Timer timer;
 	public TimerTask task;
-	public ArrayList<Integer> deviceList;
+	
 	backgroundThread(){
 		this.timer = new Timer();
 		this.task = new backgroundTimer();
 		this.timer.schedule(task, 10000);
-		this.deviceList.add(3);
-		this.deviceList.add(7);
-		this.deviceList.add(8);
-		this.deviceList.add(9);
+		/*deviceList.add(3);
+		deviceList.add(7);
+		deviceList.add(8);
+		deviceList.add(9);
 	
-		
-		
+		*/
 	}
 	
 	public void run() {
 		while(true) {
 			
 			if(((backgroundTimer)this.task).getStatus()) {
-				for(Integer iter: this.deviceList) {
+				for(Integer iter: new Scenes().getDeviceMap().values()) {
 					Service<Void> myservice = new Service<Void>() {
 
 						@Override

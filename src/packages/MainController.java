@@ -40,7 +40,9 @@ import javafx.concurrent.Task;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -64,8 +66,10 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable, Serializable {
 
@@ -203,6 +207,11 @@ public class MainController implements Initializable, Serializable {
 
 	 @FXML
 	 private RadioButton expressive;
+	 
+	 @FXML
+	 private Button addDeviceMenu;
+	 
+	 private Stage deviceWindow = new Stage();
 	 
 	
 	@Override
@@ -846,7 +855,33 @@ public class MainController implements Initializable, Serializable {
 		public void setDeviceThreeImg(ImageView deviceThreeImg) {
 			this.deviceThreeImg = deviceThreeImg;
 		}
-		
+		@FXML
+		public void openDeviceWindow()
+		{
+			// null pointer exception on pulling static variable, fix next
+			try {
+				if(deviceWindow.isShowing()) {
+					//nothing
+				}	
+				else
+				{
+					FXMLLoader deviceController = new FXMLLoader(getClass().getResource("addDeviceLayout.fxml"));
+					Pane devicePane = deviceController.load();
+					 
+					 Scene devices = new Scene(devicePane);
+					 
+					 
+					 deviceWindow.setScene(devices);
+					 deviceWindow.show();
+					 
+					
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 
 
