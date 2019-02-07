@@ -108,6 +108,7 @@
                         <Label layoutX="286.0" layoutY="65.0" text="Light One" />
                         <Label layoutX="286.0" layoutY="110.0" text="Light Two" />
                         <Label layoutX="282.0" layoutY="152.0" text="Light Three" />
+                        <Button fx:id="addDeviceMenu" layoutX="106.0" layoutY="245.0" mnemonicParsing="false" onAction="#openDeviceWindow" text="Button" />
                      </children></AnchorPane>
               </content>
             </Tab>

@@ -17,6 +17,7 @@ public class Scenes implements Serializable {
 	private Map<Integer,Integer> commandOne;
 	private Map<Integer,Integer> commandTwo;
 	private Map<Integer,Integer> commandThree;
+	private Map<String,Integer> deviceMap;
 	private int d1;
 	private int d2;
 	private int d3;
@@ -30,6 +31,7 @@ public class Scenes implements Serializable {
 		this.commandOne = new HashMap<Integer,Integer>();
 		this.commandTwo = new HashMap<Integer,Integer>();
 		this.commandThree = new HashMap<Integer,Integer>();
+		this.setDeviceMap(new HashMap<String,Integer>());
 	}
 	
 	public Map<Integer,Integer> getCommandOne() {
@@ -93,6 +95,19 @@ public class Scenes implements Serializable {
 
 	public void setWheelChair(int wheelChair) {
 		this.wheelChair = wheelChair;
+	}
+
+	public void addDevice(String name, int id) {
+		this.getDeviceMap().put(name,id);
+		
+	}
+
+	public Map<String,Integer> getDeviceMap() {
+		return deviceMap;
+	}
+
+	public void setDeviceMap(Map<String,Integer> deviceMap) {
+		this.deviceMap = deviceMap;
 	}
 	
 	

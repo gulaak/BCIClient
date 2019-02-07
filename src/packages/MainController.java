@@ -40,7 +40,9 @@ import javafx.concurrent.Task;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -64,8 +66,10 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable, Serializable {
 
@@ -125,6 +129,11 @@ public class MainController implements Initializable, Serializable {
 	 
 	 @FXML
 	 public Slider sceneSliderThree;
+	 
+	 private Stage deviceWindow = new Stage();
+	 
+	 @FXML
+	 private Button addDeviceMenu;
 	 
 	 
 
@@ -280,6 +289,30 @@ public class MainController implements Initializable, Serializable {
 	
 	public TabPane getTabInstance() {
 		return MainTabs;
+	}
+	
+	@FXML
+	public void openDeviceWindow() {
+		try {
+			if(deviceWindow.isShowing()) {
+				//nothing
+				deviceWindow.toFront();
+				
+			}
+			else {
+				FXMLLoader deviceController = new FXMLLoader(getClass().getResource("addDeviceLayout.fxml"));
+				Pane devicePane = deviceController.load();
+				
+				Scene devices = new Scene(devicePane);
+				
+				deviceWindow.setScene(devices);
+				deviceWindow.show();
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
