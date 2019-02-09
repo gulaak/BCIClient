@@ -1,7 +1,6 @@
 package packages;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class AddDeviceController implements Initializable{
 	
@@ -29,7 +27,11 @@ public class AddDeviceController implements Initializable{
 	
 	public Scenes deviceManager = new Scenes();
 	
+	private StringBuilder deviceList = new StringBuilder();
+	
 	Alert success = new Alert(AlertType.CONFIRMATION);
+	Alert listWindow = new Alert(AlertType.INFORMATION);
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -46,6 +48,7 @@ public class AddDeviceController implements Initializable{
 	public void addDevice()
 	{
 		deviceManager.addDevice( nameEntry.getText(),Integer.parseInt(this.idEntry.getText()));
+		success.showAndWait();
 	}
 	
 	@FXML
@@ -54,11 +57,17 @@ public class AddDeviceController implements Initializable{
 		Iterator<Entry<String, Integer>> forEachDevice = deviceManager.getDeviceMap().entrySet().iterator();
 		while(forEachDevice.hasNext()) 
 		{
-			Map.Entry<String,Integer> val = (Map.Entry<String,Integer>)forEachDevice.next();
-			
-			System.out.print(val.getKey());
-			System.out.println(val.getValue());
+			Map.Entry<String,Integer> val = forEachDevice.next();
+			deviceList.append(val.getKey());
+			deviceList.append(" ");
+			deviceList.append(val.getValue());
+			deviceList.append("\n");
 		}
+		
+		listWindow.setContentText(deviceList.toString());
+		listWindow.setTitle("Available Devices");
+		listWindow.setHeaderText("Device Name, Device ID");
+		listWindow.showAndWait();
 	
 	
 	}
