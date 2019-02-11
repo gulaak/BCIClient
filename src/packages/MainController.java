@@ -57,6 +57,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -66,8 +67,10 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
@@ -87,7 +90,31 @@ public class MainController implements Initializable, Serializable {
 	
 	 @FXML
 	 private TabPane MainTabs;
+	 
+	 @FXML
+	 private Tab homeTab;
+	 
+	 @FXML
+	 private Tab graphTab;
+	 
+	 @FXML
+	 private Tab scenesTab;
+	 
+	 @FXML
+	 private Tab wheelchairTab;
+	 
+	 @FXML
+	 private AnchorPane homeScreen;
 
+	 @FXML
+	 private AnchorPane graphScreen;
+	 
+	 @FXML
+	 private AnchorPane scenesScreen;
+	 
+	 @FXML
+	 private AnchorPane wheelchairScreen;
+	 
 	 @FXML
 	 private ChoiceBox<String> choiceBox;
 
@@ -233,11 +260,12 @@ public class MainController implements Initializable, Serializable {
 		this.getRecImage().setImage(this.getRecOff());
 		this.getHome().setSelected(true);
 		this.getCognitive().setSelected(true);
-		
 		this.D1Status.setText("0");
 		this.D2Status.setText("0");
 		this.D3Status.setText("0");
 		this.recStatus.setText("Off");
+
+		
 		
 		
 		this.sceneSliderOne.valueProperty().addListener(new ChangeListener<Number>() {	// change listener for device 1
@@ -373,22 +401,31 @@ public class MainController implements Initializable, Serializable {
     	switch(event.getCode()) {
     		case W:
     			System.out.println("Forward");
+    			forwardPoly.setFill(Color.RED);
     			ZWave.rcForward();
     			break;
     		case A:
     			System.out.println("Left");
+    			leftPoly.setFill(Color.RED);
     			ZWave.rcLeft();
     			break;
     		case D:
     			System.out.println("Right");
+    			rightPoly.setFill(Color.RED);
     			ZWave.rcRight();
     			break;
     		case S:
     			System.out.println("Reverse");
+    			reversePoly.setFill(Color.RED);
     			ZWave.rcReverse();
     			break;
 			default:
+				forwardPoly.setFill(Color.RED);
+				leftPoly.setFill(Color.RED);
+				rightPoly.setFill(Color.RED);
+				reversePoly.setFill(Color.RED);
 				ZWave.rcStop();
+				
 				break;
     	
     	}
