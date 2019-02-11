@@ -27,15 +27,14 @@ public class AddDeviceController implements Initializable{
 	@FXML
 	private TextField idEntry;
 	
-	public Scenes deviceManager = new Scenes();
+	public Scenes deviceManager = ZWave.commandSettings;
 	
-	private StringBuilder deviceList = new StringBuilder();
+	private StringBuilder deviceList;
 	
 	Alert success = new Alert(AlertType.CONFIRMATION);
-<<<<<<< HEAD
-=======
+
 	Alert listWindow = new Alert(AlertType.INFORMATION);
->>>>>>> 0912c46ccacdd16de633e63203e204f43212aafa
+
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -54,11 +53,13 @@ public class AddDeviceController implements Initializable{
 	{
 		deviceManager.addDevice( nameEntry.getText(),Integer.parseInt(this.idEntry.getText()));
 		success.showAndWait();
+		ZWave.setSettings(this.deviceManager.getDeviceMap());
 	}
 	
 	@FXML
 	public void showDevices()
 	{
+		this.deviceList = new StringBuilder();
 		Iterator<Entry<String, Integer>> forEachDevice = deviceManager.getDeviceMap().entrySet().iterator();
 		while(forEachDevice.hasNext()) 
 		{
@@ -73,6 +74,7 @@ public class AddDeviceController implements Initializable{
 		listWindow.setTitle("Available Devices");
 		listWindow.setHeaderText("Device Name, Device ID");
 		listWindow.showAndWait();
+		
 	
 	
 	}

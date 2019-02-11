@@ -74,7 +74,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
-public class MainController implements Initializable, Serializable {
+public class MainController implements Initializable{
 
 	
 	
@@ -362,14 +362,18 @@ public class MainController implements Initializable, Serializable {
 						// TODO Auto-generated method stub
 
 						
-						ZWave.post(ZWave.commandSettings.getD1(), 99);
+						ZWave.post(ZWave.getDevice("Light1"), 99);
 						return null;
 						
 					}
 					
 					@Override
 					protected void failed() {
-						System.out.println("Failed thread");
+						Alert alert = new Alert(AlertType.ERROR);
+				 		alert.setTitle("Error");
+				 		alert.setHeaderText("Error");
+				 		alert.setContentText("Check Server Status or Device Manager");
+				 		alert.showAndWait();
 					}
 					
 					@Override
@@ -472,7 +476,7 @@ public class MainController implements Initializable, Serializable {
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
 
-						ZWave.post(ZWave.commandSettings.getD2(), 99);
+						ZWave.post(ZWave.getDevice("Light2"), 99);
 						return null;
 						
 					}
@@ -511,7 +515,7 @@ public class MainController implements Initializable, Serializable {
 					@Override
 					protected Void call() throws Exception {
 						// TODO Auto-generated method stub
-						ZWave.post(ZWave.commandSettings.getD3(), 99);
+						ZWave.post(ZWave.getDevice("Light3"), 99);
 						return null;
 					}
 					@Override
@@ -630,7 +634,7 @@ public class MainController implements Initializable, Serializable {
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
 							
-							ZWave.toggleRec(ZWave.commandSettings.getD4());
+							ZWave.toggleRec(ZWave.getDevice("Rec"));
 							return null;
 							
 						}
@@ -678,14 +682,14 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.sliderPost(ZWave.commandSettings.getD1(), brightness);
+							ZWave.sliderPost(ZWave.getDevice("Light1"), brightness);
 							return null;
 							
 						}
 						
 						@Override
 						protected void failed() {
-							System.out.println("Failed thread");
+							
 						}
 						
 						@Override
@@ -730,7 +734,7 @@ public class MainController implements Initializable, Serializable {
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
 							
-							ZWave.sliderPost(ZWave.commandSettings.getD1(), brightness);
+							ZWave.sliderPost(ZWave.getDevice("Light2"), brightness);
 							return null;
 							
 						}
@@ -776,7 +780,7 @@ public class MainController implements Initializable, Serializable {
 						@Override
 						protected Void call() throws Exception {
 							// TODO Auto-generated method stub
-							ZWave.sliderPost(ZWave.commandSettings.getD3(), brightness);
+							ZWave.sliderPost(ZWave.getDevice("Light3"), brightness);
 							return null;
 							
 						}

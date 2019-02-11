@@ -28,7 +28,7 @@ public class backgroundTimer extends TimerTask {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		this.statusFlag = !this.statusFlag;
+		this.setStatus(true);
 		
 		
 		

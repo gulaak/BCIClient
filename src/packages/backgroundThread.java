@@ -35,8 +35,9 @@ public class backgroundThread extends Thread {
 	
 	public void run() {
 		while(true) {
+		
 			
-			if(((backgroundTimer)this.task).getStatus() && (controllerInterface.mc.getTabText().equals("Home"))) {
+			if(((backgroundTimer)this.task).getStatus() && (controllerInterface.mc.getTabText().trim().equals("Home"))) {
 				((backgroundTimer)this.task).setStatus(false);
 				
 				for(Integer iter : this.deviceList) {

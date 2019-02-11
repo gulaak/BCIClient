@@ -34,7 +34,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.*;
 
-import application.*;
+
 
 
 /** Simple example of JNA interface mapping and usage. */
