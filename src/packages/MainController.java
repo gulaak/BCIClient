@@ -283,7 +283,7 @@ public class MainController implements Initializable, Serializable {
 		ZWave.commandSettings.setD2(8);
 		ZWave.commandSettings.setD3(9);
 		ZWave.commandSettings.setD4(3);
-		ZWave.commandSettings.setWheelChair(13);
+		ZWave.commandSettings.setWheelChair(14);
 		
 	}
 	

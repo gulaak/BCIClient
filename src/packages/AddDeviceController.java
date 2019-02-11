@@ -20,7 +20,9 @@ public class AddDeviceController implements Initializable{
 	private Button saveDevice;
 	
 	@FXML
+	
 	private Button showDevice;
+	
 	@FXML
 	private TextField nameEntry;
 	
@@ -30,6 +32,7 @@ public class AddDeviceController implements Initializable{
 	public Scenes deviceManager = new Scenes();
 	
 	Alert success = new Alert(AlertType.CONFIRMATION);
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
