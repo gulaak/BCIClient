@@ -272,6 +272,18 @@ public class MainController implements Initializable{
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 				int sliderValue = (int)(Math.floor(sceneSliderOne.getValue()));
 				sceneSliderStatusOne.setText(Integer.toString(sliderValue));
+				switch (sceneListView.getSelectionModel().getSelectedItem()) {
+				case "Pull":
+					commandSettings.getCommandOne().put(7, sliderValue);
+					break;
+				case "Push":
+					commandSettings.getCommandTwo().put(7, sliderValue);
+					break;
+					
+				case "Left":
+					commandSettings.getCommandThree().put(7,sliderValue);
+					break;
+			}
 			}
 		});
 		
@@ -279,6 +291,18 @@ public class MainController implements Initializable{
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 				int sliderValue = (int)(Math.floor(sceneSliderTwo.getValue()));
 				sceneSliderStatusTwo.setText(Integer.toString(sliderValue));
+				switch (sceneListView.getSelectionModel().getSelectedItem()) {
+					case "Pull":
+						commandSettings.getCommandOne().put(8, sliderValue);
+						break;
+					case "Push":
+						commandSettings.getCommandTwo().put(8, sliderValue);
+						break;
+						
+					case "Left":
+						commandSettings.getCommandThree().put(8,sliderValue);
+						break;
+				}
 			}
 		});
 		
@@ -286,6 +310,18 @@ public class MainController implements Initializable{
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 				int sliderValue = (int)(Math.floor(sceneSliderThree.getValue()));
 				sceneSliderStatusThree.setText(Integer.toString(sliderValue));
+				switch (sceneListView.getSelectionModel().getSelectedItem()) {
+				case "Pull":
+					commandSettings.getCommandOne().put(9, sliderValue);
+					break;
+				case "Push":
+					commandSettings.getCommandTwo().put(9, sliderValue);
+					break;
+					
+				case "Left":
+					commandSettings.getCommandThree().put(9,sliderValue);
+					break;
+			}
 			}
 		});
 		
@@ -574,25 +610,6 @@ public class MainController implements Initializable{
 		 		return;
 		 	}
 		 
-		 	switch(controllerInterface.mc.sceneListView.getSelectionModel().getSelectedItem()) { // save state based on current settings
-		 		case "Push":
-		 			this.commandSettings.setCommandOne(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
-		 			this.commandSettings.setCommandOne(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
-		 			this.commandSettings.setCommandOne(9, (int)controllerInterface.mc.sceneSliderThree.getValue());
-		 			break;
-		 		case "Pull":
-		 			this.commandSettings.setCommandTwo(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
-		 			this.commandSettings.setCommandTwo(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
-		 			this.commandSettings.setCommandTwo(9, (int)controllerInterface.mc.sceneSliderThree.getValue());
-		 			break;
-		 		case "Left":
-		 			this.commandSettings.setCommandThree(7, (int)controllerInterface.mc.sceneSliderOne.getValue());
-		 			this.commandSettings.setCommandThree(8, (int)controllerInterface.mc.sceneSliderTwo.getValue());
-		 			this.commandSettings.setCommandThree(9, (int)controllerInterface.mc.sceneSliderThree.getValue());
-		 			break;
-		 		default:
-		 			throw new Exception();
-		 	}
 		 	
 			try {
 				FileOutputStream settings = new FileOutputStream(settingsFileName);
@@ -999,6 +1016,35 @@ public class MainController implements Initializable{
 				default:
 					return null;
 			}
+		}
+		
+		@FXML
+		public void showSettings(MouseEvent event) {
+			switch(sceneListView.getSelectionModel().getSelectedItem()) {
+			
+				case "Pull":
+					this.sceneSliderOne.setValue(this.commandSettings.getCommandOne().get(7));
+					this.sceneSliderTwo.setValue(this.commandSettings.getCommandOne().get(8));
+					this.sceneSliderThree.setValue(this.commandSettings.getCommandOne().get(9));
+					break;
+				case "Push":
+					this.sceneSliderOne.setValue(this.commandSettings.getCommandTwo().get(7));
+					this.sceneSliderTwo.setValue(this.commandSettings.getCommandTwo().get(8));
+					this.sceneSliderThree.setValue(this.commandSettings.getCommandTwo().get(9));
+					break;
+					
+				case "Left":
+					this.sceneSliderOne.setValue(this.commandSettings.getCommandThree().get(7));
+					this.sceneSliderTwo.setValue(this.commandSettings.getCommandThree().get(8));
+					this.sceneSliderThree.setValue(this.commandSettings.getCommandThree().get(9));
+					break;
+					
+					
+			
+			
+			}
+			
+			
 		}
 		
 		
