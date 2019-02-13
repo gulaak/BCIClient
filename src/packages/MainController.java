@@ -1,30 +1,19 @@
 package packages;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javax.swing.event.ChangeEvent;
-
-
 import org.apache.http.client.ClientProtocolException;
-
-
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-
-
-
-
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,13 +21,9 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
-
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -247,7 +232,7 @@ public class MainController implements Initializable{
 		x.setLabel("Time");
 		y.setLabel("Power(0-1)");
 		x.setScaleX(1.00);
-		sceneListView.setItems(FXCollections.observableArrayList("Pull" , "Push" , "Left"));
+		sceneListView.setItems(FXCollections.observableArrayList("Push" , "Pull" , "Left"));
 		sceneListView.getSelectionModel().getSelectedItem();
 		this.setLightOn(new Image("/LightOn.PNG")); //grab image for GUI
 		this.setLightOff(new Image("/LightOff.PNG")); // grab image for GUI
@@ -273,10 +258,10 @@ public class MainController implements Initializable{
 				int sliderValue = (int)(Math.floor(sceneSliderOne.getValue()));
 				sceneSliderStatusOne.setText(Integer.toString(sliderValue));
 				switch (sceneListView.getSelectionModel().getSelectedItem()) {
-				case "Pull":
+				case "Push":
 					commandSettings.getCommandOne().put(7, sliderValue);
 					break;
-				case "Push":
+				case "Pull":
 					commandSettings.getCommandTwo().put(7, sliderValue);
 					break;
 					
@@ -292,10 +277,10 @@ public class MainController implements Initializable{
 				int sliderValue = (int)(Math.floor(sceneSliderTwo.getValue()));
 				sceneSliderStatusTwo.setText(Integer.toString(sliderValue));
 				switch (sceneListView.getSelectionModel().getSelectedItem()) {
-					case "Pull":
+					case "Push":
 						commandSettings.getCommandOne().put(8, sliderValue);
 						break;
-					case "Push":
+					case "Pull":
 						commandSettings.getCommandTwo().put(8, sliderValue);
 						break;
 						
@@ -311,10 +296,10 @@ public class MainController implements Initializable{
 				int sliderValue = (int)(Math.floor(sceneSliderThree.getValue()));
 				sceneSliderStatusThree.setText(Integer.toString(sliderValue));
 				switch (sceneListView.getSelectionModel().getSelectedItem()) {
-				case "Pull":
+				case "Push":
 					commandSettings.getCommandOne().put(9, sliderValue);
 					break;
-				case "Push":
+				case "Pull":
 					commandSettings.getCommandTwo().put(9, sliderValue);
 					break;
 					
@@ -1022,12 +1007,12 @@ public class MainController implements Initializable{
 		public void showSettings(MouseEvent event) {
 			switch(sceneListView.getSelectionModel().getSelectedItem()) {
 			
-				case "Pull":
+				case "Push":
 					this.sceneSliderOne.setValue(this.commandSettings.getCommandOne().get(7));
 					this.sceneSliderTwo.setValue(this.commandSettings.getCommandOne().get(8));
 					this.sceneSliderThree.setValue(this.commandSettings.getCommandOne().get(9));
 					break;
-				case "Push":
+				case "Pull":
 					this.sceneSliderOne.setValue(this.commandSettings.getCommandTwo().get(7));
 					this.sceneSliderTwo.setValue(this.commandSettings.getCommandTwo().get(8));
 					this.sceneSliderThree.setValue(this.commandSettings.getCommandTwo().get(9));

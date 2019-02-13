@@ -49,7 +49,7 @@ public class Dispatcher {
 				LightTimer.initTimer();
 				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandOne());
 			}
-			else if((EmoState.INSTANCE.ES_ExpressivGetClenchExtent(eState)  > 0.1)  && (LightTimer.timedout == true)) {
+			else if((EmoState.INSTANCE.ES_ExpressivGetClenchExtent(eState)  > 0.5)  && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
 				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandTwo());
 			}
