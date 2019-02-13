@@ -426,22 +426,22 @@ public class MainController implements Initializable{
     	switch(event.getCode()) {
     		case W:
     			System.out.println("Forward");
-    			forwardPoly.setFill(Color.RED);
+    			forwardPoly.setFill(Color.GREEN);
     			ZWave.rcForward();
     			break;
     		case A:
     			System.out.println("Left");
-    			leftPoly.setFill(Color.RED);
+    			leftPoly.setFill(Color.GREEN);
     			ZWave.rcLeft();
     			break;
     		case D:
     			System.out.println("Right");
-    			rightPoly.setFill(Color.RED);
+    			rightPoly.setFill(Color.GREEN);
     			ZWave.rcRight();
     			break;
     		case S:
     			System.out.println("Reverse");
-    			reversePoly.setFill(Color.RED);
+    			reversePoly.setFill(Color.GREEN);
     			ZWave.rcReverse();
     			break;
 			default:

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.Double?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -20,7 +28,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packages.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packages.MainController">
    
    <children>
    
@@ -111,7 +119,7 @@
               <content>
                 <AnchorPane fx:id="wheelchairScreen" focusTraversable="true" minHeight="0.0" minWidth="0.0" onKeyPressed="#keyPress" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: LIGHTBLUE;">
                      <children>
-                        <Polygon fx:id="forwardPoly" fill="DODGERBLUE" layoutX="300.0" layoutY="129.0" stroke="BLACK" strokeType="INSIDE">
+                        <Polygon fx:id="forwardPoly" fill="RED" layoutX="300.0" layoutY="129.0" stroke="BLACK" strokeType="INSIDE">
                           <points>
                             <Double fx:value="-50.0" />
                             <Double fx:value="40.0" />
@@ -121,10 +129,15 @@
                             <Double fx:value="-60.0" />
                           </points>
                         </Polygon>
-                        <Polygon fx:id="leftPoly" fill="DODGERBLUE" layoutX="200.0" layoutY="158.0" points="50.0, 93.0, 50.0, 10.5, -86.5, 50.5" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon fx:id="reversePoly" fill="DODGERBLUE" layoutX="300.0" layoutY="211.0" points="-50.0, 40.0, 50.0, 40.0, -1.5, 132.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon fx:id="rightPoly" fill="DODGERBLUE" layoutX="437.0" layoutY="158.0" points="50.0, 93.0, 50.0, 10.5, -86.5, 50.5" rotate="180.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="DODGERBLUE" layoutX="300.0" layoutY="210.0" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="leftPoly" fill="RED" layoutX="200.0" layoutY="158.0" points="50.0, 93.0, 50.0, 10.5, -86.5, 50.5" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="reversePoly" fill="RED" layoutX="300.0" layoutY="211.0" points="-50.0, 40.0, 50.0, 40.0, -1.5, 132.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="rightPoly" fill="RED" layoutX="437.0" layoutY="158.0" points="50.0, 93.0, 50.0, 10.5, -86.5, 50.5" rotate="180.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#ffd51f" layoutX="300.0" layoutY="210.0" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Text layoutX="291.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="W" />
+                        <Text layoutX="197.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
+                        <Text layoutX="393.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
+                        <Text layoutX="296.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S" />
+                        <Text layoutX="270.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Controls" />
                      </children></AnchorPane>
               </content>
             </Tab>
