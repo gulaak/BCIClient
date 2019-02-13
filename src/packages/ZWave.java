@@ -158,14 +158,14 @@ public class ZWave {
 		
 	}
 	public static void rcForward() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.commandSettings.getWheelChair())  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(20)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.getDevice("WheelChair"))  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(20)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 	
 		
 	}
 	public static void rcReverse() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.commandSettings.getWheelChair())  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(40)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.getDevice("WheelChair"))  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(40)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		
@@ -173,21 +173,21 @@ public class ZWave {
 	}
 	
 	public static void rcStop() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.commandSettings.getWheelChair())  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(0)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.getDevice("WheelChair"))  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(0)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		
 		
 	}
 	public static void rcLeft() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.commandSettings.getWheelChair())  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(10)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.getDevice("WheelChair"))  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(10)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		
 		
 	}
 	public static void rcRight() throws ClientProtocolException, IOException {
-		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.commandSettings.getWheelChair())  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(30)+"%29");
+		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.getDevice("WheelChair"))  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(30)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
 		postStatus.releaseConnection();
 		

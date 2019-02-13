@@ -9,8 +9,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-
-
 public class backgroundThread extends Thread {
 
 
@@ -27,10 +25,7 @@ public class backgroundThread extends Thread {
 		this.deviceList.add(3);
 		this.deviceList.add(7);
 		this.deviceList.add(8);
-		this.deviceList.add(9);
-	
-		
-		
+		this.deviceList.add(9);		
 	}
 	
 	public void run() {
