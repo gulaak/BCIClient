@@ -403,7 +403,8 @@ public class MainController implements Initializable{
 //							getDeviceOneImg().setImage(getLightOn());
 //							getD1Status().setText(Integer.toString(99));
 //						}
-//						else {
+//						else 
+//						{
 //							getDeviceOneImg().setImage(getLightOff());
 //							getD1Status().setText(Integer.toString(0));
 //						}
@@ -427,21 +428,33 @@ public class MainController implements Initializable{
     		case W:
     			System.out.println("Forward");
     			forwardPoly.setFill(Color.GREEN);
+				leftPoly.setFill(Color.RED);
+				rightPoly.setFill(Color.RED);
+				reversePoly.setFill(Color.RED);
     			ZWave.rcForward();
     			break;
     		case A:
     			System.out.println("Left");
-    			leftPoly.setFill(Color.GREEN);
+    			forwardPoly.setFill(Color.RED);
+				leftPoly.setFill(Color.GREEN);
+				rightPoly.setFill(Color.RED);
+				reversePoly.setFill(Color.RED);
     			ZWave.rcLeft();
     			break;
     		case D:
     			System.out.println("Right");
-    			rightPoly.setFill(Color.GREEN);
+    			forwardPoly.setFill(Color.RED);
+				leftPoly.setFill(Color.RED);
+				rightPoly.setFill(Color.GREEN);
+				reversePoly.setFill(Color.RED);
     			ZWave.rcRight();
     			break;
     		case S:
     			System.out.println("Reverse");
-    			reversePoly.setFill(Color.GREEN);
+    			forwardPoly.setFill(Color.RED);
+				leftPoly.setFill(Color.RED);
+				rightPoly.setFill(Color.RED);
+				reversePoly.setFill(Color.GREEN);
     			ZWave.rcReverse();
     			break;
 			default:
