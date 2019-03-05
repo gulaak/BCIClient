@@ -101,7 +101,7 @@ public class Dispatcher {
 		float currPower = EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState);
 		
 		if(selectionNetwork) {
-			
+			System.out.println(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState));
 			//Check for pushing action at a power over 0.5 and timeout false
 			if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PUSH.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
@@ -158,9 +158,10 @@ public class Dispatcher {
 			selectionSuite = true;
 		
 		}
-		else
+		else {
 			selectionNetwork = false;
 			selectionSuite = false;
+		}
 			
 	}
 

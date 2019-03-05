@@ -110,6 +110,7 @@ public class ZWave {
 								return null;
 							}
 							else {
+								System.out.println(val.getKey().toString() + ":" + val.getValue().toString());
 								sliderPost(Integer.parseInt(val.getKey().toString()),Integer.parseInt(val.getValue().toString()));
 								return null;
 							}
@@ -121,25 +122,37 @@ public class ZWave {
 								switch(val.getKey().toString()) {
 									case "7":
 										controllerInterface.mc.getD1Status().setText(val.getValue().toString());
-										if(val.getValue().equals(0))
+										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOff());
-										else
+											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+										}
+										else {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOn());
+											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+										}
 										
 										break;
 									case "8":
 										controllerInterface.mc.getD2Status().setText(val.getValue().toString());
-										if(val.getValue().equals(0))
+										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOff());
-										else
+											controllerInterface.mc.getDeviceSlider(8).setValue(Integer.parseInt(val.getValue().toString()));
+										}
+										else {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOn());
+											controllerInterface.mc.getDeviceSlider(8).setValue(Integer.parseInt(val.getValue().toString()));
+										}
 										break;
 									case "9":
 										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
-										if(val.getValue().equals(0))
+										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
-										else
+											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+										}
+										else {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOn());
+											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+										}
 										break;
 									default:
 										break;

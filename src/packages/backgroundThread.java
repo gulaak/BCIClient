@@ -20,12 +20,16 @@ public class backgroundThread extends Thread {
 	backgroundThread(){
 		timer = new Timer();
 		this.task = new backgroundTimer();
-		this.timer.schedule(task, 2000 , 1000);
+		this.timer.schedule(task, 4000 , 1000);
 		this.deviceList = new ArrayList<Integer>();
-		this.deviceList.add(3);
-		this.deviceList.add(7);
-		this.deviceList.add(8);
-		this.deviceList.add(9);		
+		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Rec"));
+		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Light1"));
+		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Light2"));
+		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Light3"));	
+//		this.deviceList.add(3);
+//		this.deviceList.add(7);
+//		this.deviceList.add(8);
+//		this.deviceList.add(9);	
 	}
 	
 	public void run() {
