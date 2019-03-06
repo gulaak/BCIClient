@@ -15,8 +15,11 @@ public class Scenes implements Serializable {
 	private static final long serialVersionUID = 4586;
 	
 	private Map<Integer,Integer> commandOne;
+	private String commandOneState;
 	private Map<Integer,Integer> commandTwo;
+	private String commandTwoState;
 	private Map<Integer,Integer> commandThree;
+	private String commandThreeState;
 	private Map<String,Integer> deviceMap;
 	private int d1;
 	private int d2;
@@ -33,6 +36,25 @@ public class Scenes implements Serializable {
 		this.commandThree = new HashMap<Integer,Integer>();
 		this.setDeviceMap(new HashMap<String,Integer>());
 	}
+	public void setCommandOneState(String s) {
+		this.commandOneState = s;
+	}
+	public String getCommandOneState() {
+		return this.commandOneState;
+	}
+	public void setCommandTwoState(String s) {
+		this.commandTwoState = s;
+	}
+	public String getCommandTwoState() {
+		return this.commandTwoState;
+	}
+	public void setCommandThreeState(String s) {
+		this.commandThreeState = s;
+	}
+	public String getCommandThreeState() {
+		return this.commandThreeState;
+	}
+	
 	
 	public Map<Integer,Integer> getCommandOne() {
 		return this.commandOne;

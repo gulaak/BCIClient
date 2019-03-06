@@ -47,15 +47,15 @@ public class Dispatcher {
 			//Check for pushing action at a power over 0.5 and timeout false
 			if ((EmoState.INSTANCE.ES_ExpressivIsLeftWink(eState)==1)  && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandOne());
+				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandOne(),controllerInterface.mc.commandSettings.getCommandOneState());
 			}
 			else if((EmoState.INSTANCE.ES_ExpressivGetClenchExtent(eState)  > 0.5)  && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandTwo());
+				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandTwo(),controllerInterface.mc.commandSettings.getCommandTwoState());
 			}
 			else if((EmoState.INSTANCE.ES_ExpressivIsLookingLeft(eState)==1)  && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandThree());
+				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandThree(),controllerInterface.mc.commandSettings.getCommandThreeState());
 			}
 			
 			else if(EmoState.INSTANCE.ES_ExpressivIsLookingRight(eState)==1 &&(LightTimer.timedout==true)) {
@@ -105,15 +105,15 @@ public class Dispatcher {
 			//Check for pushing action at a power over 0.5 and timeout false
 			if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PUSH.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandOne());
+				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandOne(),controllerInterface.mc.commandSettings.getCommandOneState());
 			}
 			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PULL.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandTwo());
+				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandTwo(),controllerInterface.mc.commandSettings.getCommandTwoState());
 			}
 			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_LEFT.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandThree());
+				ZWave.scenePost(controllerInterface.mc.commandSettings.getCommandThree(),controllerInterface.mc.commandSettings.getCommandThreeState());
 			}
 			
 			else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==EE_CognitivAction_t.COG_RIGHT.ToInt() && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {

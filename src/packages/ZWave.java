@@ -3,6 +3,7 @@ package packages;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class ZWave {
 	private static String authenticate = ZWave.address + ZWave.port  +"/ZAutomation/api/v1/login";
 	private static HttpClient client;
 	public static Scenes commandSettings;
+	public static String currLightState;
 	
 	//get current address of http server
 	public static String getAddress() {
@@ -92,12 +94,14 @@ public class ZWave {
 		
 	}
 	
-	public static void scenePost(Map<Integer,Integer> obj) throws ClientProtocolException, IOException{ 
+	public static void scenePost(Map<Integer,Integer> obj,String state) throws ClientProtocolException, IOException{ 
+		
 		Iterator<Entry<Integer, Integer>> x = obj.entrySet().iterator();
 		while(x.hasNext()) {
 			Map.Entry val = (Map.Entry)x.next();
+			
 			Service<Void> myservice = new Service<Void>() {
-
+	
 				@Override
 				protected Task<Void> createTask() {
 					// TODO Auto-generated method stub
@@ -110,8 +114,14 @@ public class ZWave {
 								return null;
 							}
 							else {
-								System.out.println(val.getKey().toString() + ":" + val.getValue().toString());
-								sliderPost(Integer.parseInt(val.getKey().toString()),Integer.parseInt(val.getValue().toString()));
+								
+								if(state == currLightState && getStatus(Integer.parseInt(val.getKey().toString()))>0) {
+									sliderPost(Integer.parseInt(val.getKey().toString()),0);
+								}
+								else
+									sliderPost(Integer.parseInt(val.getKey().toString()),Integer.parseInt(val.getValue().toString()));
+								
+									
 								return null;
 							}
 						}
@@ -119,7 +129,8 @@ public class ZWave {
 						@Override
 						protected void succeeded() {
 							Platform.runLater(()->{
-								switch(val.getKey().toString()) {
+								currLightState = state;
+								switch(val.getKey().toString()){
 									case "7":
 										controllerInterface.mc.getD1Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
@@ -147,11 +158,11 @@ public class ZWave {
 										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(9).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										else {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(9).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										break;
 									default:
@@ -170,6 +181,11 @@ public class ZWave {
 		}
 		
 	}
+
+		
+		
+		
+	
 	public static void rcForward() throws ClientProtocolException, IOException {
 		HttpPost postStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B"+ Integer.toString(ZWave.getDevice("WheelChair"))  +"%5D.instances%5B0%5D.Basic.Set%28" + Integer.toString(20)+"%29");
 		HttpResponse postResponse = client.execute(postStatus);
