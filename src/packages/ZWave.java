@@ -76,7 +76,7 @@ public class ZWave {
 		return 0;
 		
 	}
-	
+	// gets status of a specific device number 
 	public static int getStatus(int device) throws ClientProtocolException, IOException {
 		HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B" + Integer.toString(device) + "%5D.instances%5B0%5D.commandClasses.SwitchMultilevel.data.level.value");
 		HttpResponse statusResponse = client.execute(getStatus);
@@ -85,6 +85,7 @@ public class ZWave {
 		return Integer.parseInt(statusOut.readLine());
 		
 	}
+	// gets the receptacle status another function is needed because different API calls
 	public static boolean getRecStatus(int device) throws IOException {
 		HttpPost getStatus = new HttpPost(ZWave.address + ZWave.port + "/ZWaveAPI/Run/devices%5B" + Integer.toString(device) + "%5D.instances%5B0%5D.commandClasses.SwitchBinary.data.level.value");
 		HttpResponse statusResponse = client.execute(getStatus);
@@ -93,17 +94,17 @@ public class ZWave {
 		return Boolean.parseBoolean(statusOut.readLine());
 		
 	}
-	
+	// Turns on a combination of devices from a mental command action
 	public static void scenePost(Map<Integer,Integer> obj,String state) throws ClientProtocolException, IOException{ 
 		
-		Iterator<Entry<Integer, Integer>> x = obj.entrySet().iterator();
+		Iterator<Entry<Integer, Integer>> x = obj.entrySet().iterator(); // iterate through Map object
 		while(x.hasNext()) {
-			Map.Entry val = (Map.Entry)x.next();
+			Map.Entry val = (Map.Entry)x.next(); // get next mab object
 			
-			Service<Void> myservice = new Service<Void>() {
+			Service<Void> myservice = new Service<Void>() { // create new service for task
 	
 				@Override
-				protected Task<Void> createTask() {
+				protected Task<Void> createTask() { // create new task
 					// TODO Auto-generated method stub
 					return new Task<Void>() {
 

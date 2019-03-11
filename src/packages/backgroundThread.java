@@ -22,10 +22,10 @@ public class backgroundThread extends Thread {
 		this.task = new backgroundTimer();
 		this.timer.schedule(task, 4000 , 1000);
 		this.deviceList = new ArrayList<Integer>();
-		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Rec"));
-		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Light1"));
-		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Light2"));
-		this.deviceList.add(ZWave.commandSettings.getDeviceMap().get("Light3"));	
+		this.deviceList.add(ZWave.getDevice("Rec"));
+		this.deviceList.add(ZWave.getDevice("Light1"));
+		this.deviceList.add(ZWave.getDevice("Light2"));
+		this.deviceList.add(ZWave.getDevice("Light3"));	
 //		this.deviceList.add(3);
 //		this.deviceList.add(7);
 //		this.deviceList.add(8);
@@ -42,7 +42,7 @@ public class backgroundThread extends Thread {
 				for(Integer iter : this.deviceList) {
 					Platform.runLater(()->{
 						// TODO Auto-generated method stub
-						if(iter == 3) {
+						if(iter == ZWave.getDevice("Rec")) {
 							boolean status;
 							if(controllerInterface.mc.getRecStatus().getText() == "On") {
 								status = true;

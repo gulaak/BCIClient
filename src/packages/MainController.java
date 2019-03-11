@@ -976,48 +976,44 @@ public class MainController implements Initializable{
 		
 		
 		public Label getDeviceStatus(int device) {
-			switch(device) {
-				case 7:
+			
+				if(device == ZWave.getDevice("Light1"))
 					return this.D1Status;
 					
-				case 8:
+				else if(device == ZWave.getDevice("Light2"))
 					return this.D2Status;
 					
-				case 9:
+				else
 					return this.D3Status;
 					
-				default:
-					return null;
-			}
+				
+			
 		}
 		
 		public ImageView getDeviceImage(int device) {
-			switch(device) {
-				case 7:
+			
+				if(device == ZWave.getDevice("Light1"))
 					return this.deviceOneImg;
 					
-				case 8:
+				else if(device == ZWave.getDevice("Light2"))
 					return this.deviceTwoImg;
 					
-				case 9:
+				else
 					return this.deviceThreeImg;
 					
-				default:
-					return null;
-			}
+		
 		}
 		
 		public Slider getDeviceSlider(int device) {
-			switch(device) {
-				case 7:
+			
+				if(device == ZWave.getDevice("Light1"))
 					return this.SliderD1;
-				case 8:
+				else if(device == ZWave.getDevice("Light2"))
 					return this.SliderD2;
-				case 9:
+				else
 					return this.SliderD3;
-				default:
-					return null;
-			}
+			
+			
 		}
 		
 		@FXML
