@@ -73,13 +73,14 @@ public class AddDeviceController implements Initializable
 	public void addDevice()
 	{
 		deviceManager.setDeviceMap(new HashMap<String,Integer>());
-		deviceManager.addDevice("Light 1",Integer.parseInt(this.ID1.getText()));
-		deviceManager.addDevice("Light 2",Integer.parseInt(this.ID2.getText()));
-		deviceManager.addDevice("Light 3",Integer.parseInt(this.ID3.getText()));
-		deviceManager.addDevice("Receptacle",Integer.parseInt(this.ID4.getText()));
-		deviceManager.addDevice("Wheelchair",Integer.parseInt(this.ID5.getText()));
-		success.showAndWait();
+		deviceManager.addDevice("Light1",Integer.parseInt(this.ID1.getText()));
+		deviceManager.addDevice("Light2",Integer.parseInt(this.ID2.getText()));
+		deviceManager.addDevice("Light3",Integer.parseInt(this.ID3.getText()));
+		deviceManager.addDevice("Rec",Integer.parseInt(this.ID4.getText()));
+		deviceManager.addDevice("WheelChair",Integer.parseInt(this.ID5.getText()));
 		ZWave.setSettings(this.deviceManager.getDeviceMap());
+		success.showAndWait();
+		
 	}
 	
 	@FXML
