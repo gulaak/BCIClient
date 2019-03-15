@@ -332,11 +332,12 @@ public class MainController implements Initializable{
 		ZWave.commandSettings.setCommandTwoState("Pull");
 		ZWave.commandSettings.setCommandThreeState("Left");
 		
-//		ZWave.commandSettings.setD1(7);
-//		ZWave.commandSettings.setD2(8);
-//		ZWave.commandSettings.setD3(9);
-//		ZWave.commandSettings.setD4(3);
-//		ZWave.commandSettings.setWheelChair(14);
+	//	ZWave.commandSettings.setD1();
+		
+	//	ZWave.commandSettings.setD2(8);
+	//	ZWave.commandSettings.setD3(9);
+	//	ZWave.commandSettings.setD4(3);
+	//	ZWave.commandSettings.setWheelChair(14);
 		
 	}
 	

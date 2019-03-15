@@ -260,6 +260,9 @@ public class ZWave {
 	public static int getDevice(String deviceName){
 		return commandSettings.getDeviceMap().get(deviceName);
 	}
+	public static void addDevice(String deviceName, int deviceId) {
+		commandSettings.getDeviceMap().put(deviceName, deviceId);
+	}
 	
 	public static void setSettings(Map<String,Integer> map) {
 		commandSettings.setDeviceMap(map);
