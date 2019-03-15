@@ -35,6 +35,7 @@ public class Scenes implements Serializable {
 		this.commandTwo = new HashMap<Integer,Integer>();
 		this.commandThree = new HashMap<Integer,Integer>();
 		this.setDeviceMap(new HashMap<String,Integer>());
+		
 	}
 	public void setCommandOneState(String s) {
 		this.commandOneState = s;
@@ -130,6 +131,7 @@ public class Scenes implements Serializable {
 
 	public void setDeviceMap(Map<String,Integer> deviceMap) {
 		this.deviceMap = deviceMap;
+		
 	}
 	
 	

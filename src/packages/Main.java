@@ -69,7 +69,6 @@ public class Main extends Application
 		worker.start();
 
 
-	   
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("BCI Client");
 		primaryStage.setResizable(false);
