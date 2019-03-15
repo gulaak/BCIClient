@@ -259,14 +259,14 @@ public class MainController implements Initializable{
 				sceneSliderStatusOne.setText(Integer.toString(sliderValue));
 				switch (sceneListView.getSelectionModel().getSelectedItem()) {
 				case "Push":
-					commandSettings.getCommandOne().put(7, sliderValue);
+					commandSettings.getCommandOne().put(ZWave.getDevice("Light1"), sliderValue);
 					break;
 				case "Pull":
-					commandSettings.getCommandTwo().put(7, sliderValue);
+					commandSettings.getCommandTwo().put(ZWave.getDevice("Light1"), sliderValue);
 					break;
 					
 				case "Left":
-					commandSettings.getCommandThree().put(7,sliderValue);
+					commandSettings.getCommandThree().put(ZWave.getDevice("Light1"),sliderValue);
 					break;
 			}
 			}
@@ -278,14 +278,14 @@ public class MainController implements Initializable{
 				sceneSliderStatusTwo.setText(Integer.toString(sliderValue));
 				switch (sceneListView.getSelectionModel().getSelectedItem()) {
 					case "Push":
-						commandSettings.getCommandOne().put(8, sliderValue);
+						commandSettings.getCommandOne().put(ZWave.getDevice("Light2"), sliderValue);
 						break;
 					case "Pull":
-						commandSettings.getCommandTwo().put(8, sliderValue);
+						commandSettings.getCommandTwo().put(ZWave.getDevice("Light2"), sliderValue);
 						break;
 						
 					case "Left":
-						commandSettings.getCommandThree().put(8,sliderValue);
+						commandSettings.getCommandThree().put(ZWave.getDevice("Light2"),sliderValue);
 						break;
 				}
 			}
@@ -297,14 +297,14 @@ public class MainController implements Initializable{
 				sceneSliderStatusThree.setText(Integer.toString(sliderValue));
 				switch (sceneListView.getSelectionModel().getSelectedItem()) {
 				case "Push":
-					commandSettings.getCommandOne().put(9, sliderValue);
+					commandSettings.getCommandOne().put(ZWave.getDevice("Light3"), sliderValue);
 					break;
 				case "Pull":
-					commandSettings.getCommandTwo().put(9, sliderValue);
+					commandSettings.getCommandTwo().put(ZWave.getDevice("Light3"), sliderValue);
 					break;
 					
 				case "Left":
-					commandSettings.getCommandThree().put(9,sliderValue);
+					commandSettings.getCommandThree().put(ZWave.getDevice("Light3"),sliderValue);
 					break;
 			}
 			}

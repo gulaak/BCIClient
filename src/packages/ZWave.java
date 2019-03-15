@@ -131,8 +131,9 @@ public class ZWave {
 						protected void succeeded() {
 							Platform.runLater(()->{
 								currLightState = state;
-								switch(val.getKey().toString()){
-									case "7":
+								int key = Integer.parseInt(val.getKey().toString());
+								
+								if(key == ZWave.getDevice("Light1")){
 										controllerInterface.mc.getD1Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOff());
@@ -143,8 +144,9 @@ public class ZWave {
 											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										
-										break;
-									case "8":
+										
+								}
+								else if(key == ZWave.getDevice("Light2")) {
 										controllerInterface.mc.getD2Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOff());
@@ -154,8 +156,9 @@ public class ZWave {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOn());
 											controllerInterface.mc.getDeviceSlider(8).setValue(Integer.parseInt(val.getValue().toString()));
 										}
-										break;
-									case "9":
+								}
+										
+								else {
 										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
@@ -165,10 +168,8 @@ public class ZWave {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOn());
 											controllerInterface.mc.getDeviceSlider(9).setValue(Integer.parseInt(val.getValue().toString()));
 										}
-										break;
-									default:
-										break;
 								}
+								
 							});
 						}
 						
