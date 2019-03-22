@@ -314,19 +314,24 @@ public class MainController implements Initializable{
 		try {
 			file = new FileInputStream(settingsFileName);
 			 ObjectInputStream in = new ObjectInputStream(file); 
-			 commandSettings = (Scenes)in.readObject(); 
+			 this.commandSettings = (Scenes)in.readObject(); 
 			 ZWave.commandSettings = this.commandSettings;
 		     in.close(); 
 		     file.close();
-		} catch (IOException e) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			commandSettings = new Scenes();
-			e.printStackTrace();
+			ZWave.commandSettings = this.commandSettings;
+			//e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			commandSettings = new Scenes();
-			ZWave.commandSettings = new Scenes();
-			e.printStackTrace();
+			ZWave.commandSettings = this.commandSettings;
+			//e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			commandSettings = new Scenes();
+			ZWave.commandSettings = this.commandSettings;
 		}
 		ZWave.commandSettings.setCommandOneState("Push");
 		ZWave.commandSettings.setCommandTwoState("Pull");
@@ -1022,20 +1027,20 @@ public class MainController implements Initializable{
 			switch(sceneListView.getSelectionModel().getSelectedItem()) {
 			
 				case "Push":
-					this.sceneSliderOne.setValue(this.commandSettings.getCommandOne().get(7));
-					this.sceneSliderTwo.setValue(this.commandSettings.getCommandOne().get(8));
-					this.sceneSliderThree.setValue(this.commandSettings.getCommandOne().get(9));
+					this.sceneSliderOne.setValue(this.commandSettings.getCommandOne().get(ZWave.getDevice("Light1")));
+					this.sceneSliderTwo.setValue(this.commandSettings.getCommandOne().get(ZWave.getDevice("Light2")));
+					this.sceneSliderThree.setValue(this.commandSettings.getCommandOne().get(ZWave.getDevice("Light3")));
 					break;
 				case "Pull":
-					this.sceneSliderOne.setValue(this.commandSettings.getCommandTwo().get(7));
-					this.sceneSliderTwo.setValue(this.commandSettings.getCommandTwo().get(8));
-					this.sceneSliderThree.setValue(this.commandSettings.getCommandTwo().get(9));
+					this.sceneSliderOne.setValue(this.commandSettings.getCommandTwo().get(ZWave.getDevice("Light1")));
+					this.sceneSliderTwo.setValue(this.commandSettings.getCommandTwo().get(ZWave.getDevice("Light2")));
+					this.sceneSliderThree.setValue(this.commandSettings.getCommandTwo().get(ZWave.getDevice("Light3")));
 					break;
 					
 				case "Left":
-					this.sceneSliderOne.setValue(this.commandSettings.getCommandThree().get(7));
-					this.sceneSliderTwo.setValue(this.commandSettings.getCommandThree().get(8));
-					this.sceneSliderThree.setValue(this.commandSettings.getCommandThree().get(9));
+					this.sceneSliderOne.setValue(this.commandSettings.getCommandThree().get(ZWave.getDevice("Light1")));
+					this.sceneSliderTwo.setValue(this.commandSettings.getCommandThree().get(ZWave.getDevice("Light2")));
+					this.sceneSliderThree.setValue(this.commandSettings.getCommandThree().get(ZWave.getDevice("Light3")));
 					break;
 					
 					

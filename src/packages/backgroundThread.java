@@ -16,16 +16,26 @@ public class backgroundThread extends Thread {
 
 	Timer timer;
 	TimerTask task;
+	boolean noDevice;
 	
 	backgroundThread(){
 		timer = new Timer();
 		this.task = new backgroundTimer();
-		this.timer.schedule(task, 4000 , 1000);
+		this.timer.schedule(task, 10000 , 1000);
 		this.deviceList = new ArrayList<Integer>();
-		this.deviceList.add(ZWave.getDevice("Rec"));
-		this.deviceList.add(ZWave.getDevice("Light1"));
-		this.deviceList.add(ZWave.getDevice("Light2"));
-		this.deviceList.add(ZWave.getDevice("Light3"));	
+		try {
+			this.deviceList.add(ZWave.getDevice("Rec"));
+			this.deviceList.add(ZWave.getDevice("Light1"));
+			this.deviceList.add(ZWave.getDevice("Light2"));
+			this.deviceList.add(ZWave.getDevice("Light3"));	
+		}
+		catch(NullPointerException e) {
+			return;
+		}
+		finally{
+			System.out.println("No devices loaded into settings");
+			this.noDevice = true;
+		}
 //		this.deviceList.add(3);
 //		this.deviceList.add(7);
 //		this.deviceList.add(8);
@@ -36,7 +46,7 @@ public class backgroundThread extends Thread {
 		while(true) {
 		
 			
-			if(((backgroundTimer)this.task).getStatus() && (controllerInterface.mc.getTabText().trim().equals("Home"))) {
+			if(((backgroundTimer)this.task).getStatus() && (controllerInterface.mc.getTabText().trim().equals("Home"))&& !this.noDevice) {
 				((backgroundTimer)this.task).setStatus(false);
 				
 				for(Integer iter : this.deviceList) {
