@@ -137,11 +137,11 @@ public class ZWave {
 										controllerInterface.mc.getD1Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										else {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(7).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										
 										
@@ -150,11 +150,11 @@ public class ZWave {
 										controllerInterface.mc.getD2Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(8).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										else {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(8).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 								}
 										
@@ -162,11 +162,11 @@ public class ZWave {
 										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(9).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										else {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(9).setValue(Integer.parseInt(val.getValue().toString()));
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 								}
 								

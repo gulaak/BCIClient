@@ -118,7 +118,7 @@ public class Dispatcher {
 			
 			else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==EE_CognitivAction_t.COG_RIGHT.ToInt() && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
 				LightTimer.initTimer();
-				ZWave.toggleRec(3);
+				ZWave.toggleRec(ZWave.getDevice("Rec"));
 			
 			}
 			
