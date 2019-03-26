@@ -42,7 +42,7 @@ public class Dispatcher {
 	public static void callExpressive(Pointer eState) throws ClientProtocolException, IOException {
 		float currPower = EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState);
 		
-		if(!selectionNetwork) {
+		if(selectionNetwork) {
 			
 			//Check for pushing action at a power over 0.5 and timeout false
 			if ((EmoState.INSTANCE.ES_ExpressivIsLeftWink(eState)==1)  && (LightTimer.timedout == true)) {
@@ -60,7 +60,7 @@ public class Dispatcher {
 			
 			else if(EmoState.INSTANCE.ES_ExpressivIsLookingRight(eState)==1 &&(LightTimer.timedout==true)) {
 				LightTimer.initTimer();
-				ZWave.toggleRec(3);
+				ZWave.toggleRec(ZWave.getDevice("Rec"));
 				
 			
 			}
@@ -71,20 +71,20 @@ public class Dispatcher {
 			
 			if ((EmoState.INSTANCE.ES_ExpressivIsLeftWink(eState) == 1)  && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10,States.motorForward.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"),States.motorForward.ToInt());
 			}
 			else if((EmoState.INSTANCE.ES_ExpressivGetClenchExtent(eState)  > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10, States.motorReverse.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"), States.motorReverse.ToInt());
 			}
 			else if(EmoState.INSTANCE.ES_ExpressivIsLookingLeft(eState)==1  && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10,States.motorLeft.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"),States.motorLeft.ToInt());
 			}
 			
 			else if(EmoState.INSTANCE.ES_ExpressivIsLookingRight(eState)==1 &&(LightTimer.timedout==true)) {
 				LightTimer.initTimer();
-				ZWave.post(10, States.motorRight.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"), States.motorRight.ToInt());
 			
 			}
 			
@@ -128,20 +128,20 @@ public class Dispatcher {
 			
 			if ((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PUSH.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10,States.motorForward.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"),States.motorForward.ToInt());
 			}
 			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_PULL.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10, States.motorReverse.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"), States.motorReverse.ToInt());
 			}
 			else if((EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState) == EE_CognitivAction_t.COG_LEFT.ToInt()) && (EmoState.INSTANCE.ES_CognitivGetCurrentActionPower(eState) > 0.5) && (LightTimer.timedout == true)) {
 				LightTimer.initTimer();
-				ZWave.post(10,States.motorLeft.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"),States.motorLeft.ToInt());
 			}
 			
 			else if(EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)==EE_CognitivAction_t.COG_RIGHT.ToInt() && (EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState)>0.5)&&(LightTimer.timedout==true)) {
 				LightTimer.initTimer();
-				ZWave.post(10, States.motorRight.ToInt());
+				ZWave.post(ZWave.getDevice("WheelChair"), States.motorRight.ToInt());
 			
 			}
 			
@@ -152,18 +152,13 @@ public class Dispatcher {
 		
 	}
 	public static void checkNetwork() {
-		if(controllerInterface.mc.getHome().isSelected() && controllerInterface.mc.getCognitive().isSelected()) {
-			
-			selectionNetwork = true;
-			selectionSuite = true;
 		
-		}
-		else {
-			selectionNetwork = false;
-			selectionSuite = false;
-		}
 			
+			selectionNetwork = controllerInterface.mc.getHome().isSelected();
+			selectionSuite = controllerInterface.mc.getCognitive().isSelected();
 	}
+		
+	
 
 }
 

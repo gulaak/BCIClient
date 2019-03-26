@@ -16,7 +16,7 @@ public class backgroundThread extends Thread {
 
 	Timer timer;
 	TimerTask task;
-	boolean noDevice;
+	boolean noDevice=false;
 	
 	backgroundThread(){
 		timer = new Timer();
@@ -28,14 +28,14 @@ public class backgroundThread extends Thread {
 			this.deviceList.add(ZWave.getDevice("Light1"));
 			this.deviceList.add(ZWave.getDevice("Light2"));
 			this.deviceList.add(ZWave.getDevice("Light3"));	
+			
 		}
 		catch(NullPointerException e) {
-			return;
-		}
-		finally{
 			System.out.println("No devices loaded into settings");
 			this.noDevice = true;
+			return;
 		}
+	
 //		this.deviceList.add(3);
 //		this.deviceList.add(7);
 //		this.deviceList.add(8);
