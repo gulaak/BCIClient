@@ -46,7 +46,7 @@ public class DataProcessing extends Thread {
     	IntByReference userID 	= null;
     	short composerPort		= 1726;
     	short enginePort		= 3008;
-    	int option 				= 1;
+    	int option 				= 2;
     	int state  				= 0;
     	
     	

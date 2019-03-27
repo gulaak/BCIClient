@@ -4,7 +4,7 @@ import java.util.TimerTask;
 
 public class LightTimer extends TimerTask {
 	
-	static int timeout = 5000;
+	static int timeout = 3000;
 	static Timer timer;
 	static TimerTask task;
 	static boolean timedout =true;
