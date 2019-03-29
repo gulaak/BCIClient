@@ -81,10 +81,12 @@ public class backgroundThread extends Thread {
 							int serverStatus;
 							try {
 								serverStatus = ZWave.getStatus(iter);
-								if (!(Math.abs((serverStatus - status)) <4)) {
+								if (!(Math.abs((serverStatus - status)) <2)) {
 									 controllerInterface.mc.getDeviceStatus(iter).setText(Integer.toString(serverStatus));;
 									 controllerInterface.mc.getDeviceSlider(iter).setValue((double)(serverStatus));
-									 if(serverStatus > 0)
+									 if(serverStatus > 0 && serverStatus < 99)
+										 controllerInterface.mc.getDeviceImage(iter).setImage(controllerInterface.mc.getLightHalf());
+									 else if(serverStatus == 99)
 										 controllerInterface.mc.getDeviceImage(iter).setImage(controllerInterface.mc.getLightOn());
 									 else
 										 controllerInterface.mc.getDeviceImage(iter).setImage(controllerInterface.mc.getLightOff());

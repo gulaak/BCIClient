@@ -139,6 +139,10 @@ public class ZWave {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOff());
 											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
+										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
+											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
+										}
 										else {
 											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOn());
 											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
@@ -152,6 +156,10 @@ public class ZWave {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOff());
 											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
+										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
+											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
+										}
 										else {
 											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOn());
 											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
@@ -162,6 +170,10 @@ public class ZWave {
 										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
 										if(val.getValue().equals(0)) {
 											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
+											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
+										}
+										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
+											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
 											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
 										}
 										else {

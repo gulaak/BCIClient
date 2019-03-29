@@ -67,6 +67,8 @@ public class MainController implements Initializable{
 	
 	 private Image lightOff;
 	 
+	 private Image lightHalf; 
+	 
 	 private Image recOff;
 	 
 	 private Image recOn;
@@ -236,6 +238,7 @@ public class MainController implements Initializable{
 		sceneListView.getSelectionModel().getSelectedItem();
 		this.setLightOn(new Image("/LightOn.PNG")); //grab image for GUI
 		this.setLightOff(new Image("/LightOff.PNG")); // grab image for GUI
+		this.setLightHalf(new Image("/LightHalf.PNG"));
 		this.setRecOff(new Image("/RecOff.PNG"));
 		this.setRecOn(new Image("/RecOn.PNG"));
 		choiceBox.getItems().add("hello"); // add profile boxes
@@ -485,14 +488,28 @@ public class MainController implements Initializable{
 	@FXML
 	void sliderOneChanged(MouseEvent event){
 		int brightness = (int)(Math.floor(SliderD1.getValue()));
-		getD1Status().setText(Integer.toString(brightness));
+		//getD1Status().setText(Integer.toString(brightness));
 		DeviceOne(brightness);
 	}
 	
 	@FXML
+    void sliderOneKey(KeyEvent event) {
+		int brightness = (int)(Math.floor(SliderD1.getValue()));
+		//getD1Status().setText(Integer.toString(brightness));
+		DeviceOne(brightness);
+    }
+	
+	@FXML
 	void sliderTwoChanged(MouseEvent event) {
 		int brightness = (int)(Math.floor(SliderD2.getValue()));
-		getD2Status().setText(Integer.toString(brightness));
+		//getD2Status().setText(Integer.toString(brightness));
+		DeviceTwo(brightness);
+	}
+	
+	@FXML
+	void sliderTwoKey(KeyEvent event) {
+		int brightness = (int)(Math.floor(SliderD2.getValue()));
+		//getD2Status().setText(Integer.toString(brightness));
 		DeviceTwo(brightness);
 	}
 	
@@ -500,10 +517,17 @@ public class MainController implements Initializable{
 	@FXML
     void sliderThreeChanged(MouseEvent event) {
     	int brightness = (int)(Math.floor(SliderD3.getValue()));
-		getD3Status().setText(Integer.toString(brightness));
+		//getD3Status().setText(Integer.toString(brightness));
 		DeviceThree(brightness);
 
     }
+	
+	@FXML
+	void sliderThreeKey(KeyEvent event) {
+    	int brightness = (int)(Math.floor(SliderD3.getValue()));
+		//getD3Status().setText(Integer.toString(brightness));
+		DeviceThree(brightness);
+	}
 	
 
 	@FXML
@@ -934,6 +958,12 @@ public class MainController implements Initializable{
 
 		public Image getLightOff() {
 			return lightOff;
+		}
+		public void setLightHalf(Image lightHalf) {
+			this.lightHalf = lightHalf;
+		}
+		public Image getLightHalf() {
+			return lightHalf;
 		}
 
 		public void setLightOff(Image lightOff) {
