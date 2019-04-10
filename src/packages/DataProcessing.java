@@ -46,7 +46,7 @@ public class DataProcessing extends Thread {
     	IntByReference userID 	= null;
     	short composerPort		= 1726;
     	short enginePort		= 3008;
-    	int option 				= 2;
+    	int option 				= 1;
     	int state  				= 0;
     	
     	
@@ -113,11 +113,13 @@ public class DataProcessing extends Thread {
 					IntByReference maxCharge = new IntByReference();
 						
 					EmoState.INSTANCE.ES_GetBatteryChargeLevel(eState, battery,maxCharge);
+				
 					Double batteryDbl = (double)battery.getValue();
 					Double maxChargeDbl =(double)battery.getValue();
-					controllerInterface.mc.getBatteryProgress().setProgress((double)(batteryDbl/maxChargeDbl));
+					Double batteryPercent = batteryDbl/4.00;
+					controllerInterface.mc.getBatteryProgress().setProgress(batteryPercent);
 					
-					controllerInterface.mc.getSignalProgress().setProgress(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState));
+					controllerInterface.mc.getSignalProgress().setProgress(EmoState.INSTANCE.ES_GetWirelessSignalStatus(eState)/2.00);
 						
 					});
 					try {

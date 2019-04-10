@@ -71,7 +71,7 @@ public class Main extends Application
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("BCI Client");
-		primaryStage.setResizable(false);
+		//primaryStage.setResizable(false);
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(e -> shutdown());
 		 

@@ -101,9 +101,7 @@ public class MainController implements Initializable{
 	 
 	 @FXML
 	 private AnchorPane wheelchairScreen;
-	 
-	 @FXML
-	 private ChoiceBox<String> choiceBox;
+
 
 	 @FXML
 	 private Label D1Status;
@@ -241,7 +239,7 @@ public class MainController implements Initializable{
 		this.setLightHalf(new Image("/LightHalf.PNG"));
 		this.setRecOff(new Image("/RecOff.PNG"));
 		this.setRecOn(new Image("/RecOn.PNG"));
-		choiceBox.getItems().add("hello"); // add profile boxes
+	
 		this.getDeviceOneImg().setImage(this.getLightOff()); // set default image
 		this.getDeviceTwoImg().setImage(this.getLightOff());
 		this.getDeviceThreeImg().setImage(this.getLightOff());

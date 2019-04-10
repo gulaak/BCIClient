@@ -21,7 +21,7 @@ public class backgroundThread extends Thread {
 	backgroundThread(){
 		timer = new Timer();
 		this.task = new backgroundTimer();
-		this.timer.schedule(task, 10000 , 1000);
+		this.timer.schedule(task, 2000 , 500);
 		this.deviceList = new ArrayList<Integer>();
 		try {
 			this.deviceList.add(ZWave.getDevice("Rec"));

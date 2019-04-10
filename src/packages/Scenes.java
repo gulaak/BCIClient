@@ -35,6 +35,9 @@ public class Scenes implements Serializable {
 		this.commandTwo = new HashMap<Integer,Integer>();
 		this.commandThree = new HashMap<Integer,Integer>();
 		this.setDeviceMap(new HashMap<String,Integer>());
+		this.setCommandOneState("Push");
+		this.setCommandTwoState("Pull");
+		this.setCommandThreeState("Left");
 		
 	}
 	public void setCommandOneState(String s) {

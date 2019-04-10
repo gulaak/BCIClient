@@ -122,67 +122,67 @@ public class ZWave {
 								else
 									sliderPost(Integer.parseInt(val.getKey().toString()),Integer.parseInt(val.getValue().toString()));
 								
-									
+								currLightState = state;
 								return null;
 							}
 						}
 						
 						@Override
 						protected void succeeded() {
-							Platform.runLater(()->{
-								currLightState = state;
-								int key = Integer.parseInt(val.getKey().toString());
-								
-								if(key == ZWave.getDevice("Light1")){
-										controllerInterface.mc.getD1Status().setText(val.getValue().toString());
-										if(val.getValue().equals(0)) {
-											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
-											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										else {
-											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										
-										
-								}
-								else if(key == ZWave.getDevice("Light2")) {
-										controllerInterface.mc.getD2Status().setText(val.getValue().toString());
-										if(val.getValue().equals(0)) {
-											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
-											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										else {
-											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-								}
-										
-								else {
-										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
-										if(val.getValue().equals(0)) {
-											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
-											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-										else {
-											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOn());
-											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
-										}
-								}
-								
-							});
+//							Platform.runLater(()->{
+//								currLightState = state;
+//								int key = Integer.parseInt(val.getKey().toString());
+//								
+//								if(key == ZWave.getDevice("Light1")){
+//										controllerInterface.mc.getD1Status().setText(val.getValue().toString());
+//										if(val.getValue().equals(0)) {
+//											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOff());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
+//											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										else {
+//											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightOn());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light1")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										
+//										
+//								}
+//								else if(key == ZWave.getDevice("Light2")) {
+//										controllerInterface.mc.getD2Status().setText(val.getValue().toString());
+//										if(val.getValue().equals(0)) {
+//											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOff());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
+//											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										else {
+//											controllerInterface.mc.getDeviceTwoImg().setImage(controllerInterface.mc.getLightOn());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light2")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//								}
+//										
+//								else {
+//										controllerInterface.mc.getD3Status().setText(val.getValue().toString());
+//										if(val.getValue().equals(0)) {
+//											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOff());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										else if( Integer.parseInt(val.getValue().toString()) > 0 && Integer.parseInt(val.getValue().toString()) < 99) {
+//											controllerInterface.mc.getDeviceOneImg().setImage(controllerInterface.mc.getLightHalf());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//										else {
+//											controllerInterface.mc.getDeviceThreeImg().setImage(controllerInterface.mc.getLightOn());
+//											controllerInterface.mc.getDeviceSlider(ZWave.getDevice("Light3")).setValue(Integer.parseInt(val.getValue().toString()));
+//										}
+//								}
+//								
+//							});
 						}
 						
 					};
