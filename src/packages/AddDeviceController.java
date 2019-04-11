@@ -83,26 +83,5 @@ public class AddDeviceController implements Initializable
 		
 	}
 	
-	@FXML
-	public void showDevices()
-	{
-		this.deviceList = new StringBuilder();
-		Iterator<Entry<String, Integer>> forEachDevice = deviceManager.getDeviceMap().entrySet().iterator();
-		while(forEachDevice.hasNext()) 
-		{
-			Map.Entry<String,Integer> val = forEachDevice.next();
-			deviceList.append(val.getKey());
-			deviceList.append(" ");
-			deviceList.append(val.getValue());
-			deviceList.append("\n");
-		}
-		
-		listWindow.setContentText(deviceList.toString());
-		listWindow.setTitle("Available Devices");
-		listWindow.setHeaderText("Device Name, Device ID");
-		listWindow.showAndWait();
-		
 	
-	
-	}
 }
