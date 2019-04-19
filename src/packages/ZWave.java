@@ -99,10 +99,8 @@ public class ZWave {
 		
 		Iterator<Entry<Integer, Integer>> x = obj.entrySet().iterator(); // iterate through Map object
 		while(x.hasNext()) {
-			Map.Entry val = (Map.Entry)x.next(); // get next mab object
-			
+			Map.Entry val = (Map.Entry)x.next(); // get next mab object	
 			Service<Void> myservice = new Service<Void>() { // create new service for task
-	
 				@Override
 				protected Task<Void> createTask() { // create new task
 					// TODO Auto-generated method stub
@@ -125,8 +123,7 @@ public class ZWave {
 								currLightState = state;
 								return null;
 							}
-						}
-						
+						}				
 						@Override
 						protected void succeeded() {
 //							Platform.runLater(()->{
@@ -187,7 +184,6 @@ public class ZWave {
 						
 					};
 				};
-				
 			};
 			myservice.start();
 			
