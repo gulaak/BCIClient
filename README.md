@@ -2,6 +2,6 @@
 
 Brain Computer Interface Graphical User Interface
 
-Designed using Java FX scene builder to interact with Emotiv EPOC EEG headset and Z-Way Server API for home autonomation system
+Designed using Java FX scene builder to interact with Emotiv EPOC EEG headset and Z-Way Server API for home automation system. 
 
 
